@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IUsuario } from '../../interfaces/IUsuario';
 import { UsuarioService } from '../../services/usuario.service';
@@ -10,19 +10,19 @@ import { UsuarioService } from '../../services/usuario.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  loginForm = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
-    senha: ['', [Validators.required]]
-  });
+  loginForm: FormGroup = new FormGroup({});
+  
 
   constructor(private formBuilder: FormBuilder,
               private usuarioService: UsuarioService,
-              private snackBar: MatSnackBar) {           
-                
+              private snackBar: MatSnackBar) {  
                }
 
   ngOnInit(): void {
-    
+    this.loginForm = this.formBuilder.group({
+      email: [null, [Validators.required, Validators.email]],
+      senha: [null, Validators.required]
+    });
   }
 
   get f() { return this.loginForm.controls; }
@@ -30,7 +30,11 @@ export class LoginComponent implements OnInit {
  
   
   logar(){
-    if(this.loginForm.invalid) return;
+    if(this.loginForm.invalid) {
+      this.snackBar.open('Erro no prenchimento', 'Prrencha todos os campos.', {
+        duration: 3000
+      });
+      return};
 
     var usuario = this.loginForm.getRawValue() as IUsuario;
     this.usuarioService.logar(usuario).subscribe((response) => {

@@ -16,16 +16,11 @@ export class TokenInterceptor implements HttpInterceptor {
         if (token && requestUrl[2] === apiUrl[2]) {
             request = request.clone({
                 setHeaders: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Token ${token}`,
                     token: `${token}`
                 }
             });
-            return next.handle(request).pipe(catchError(error => {
-                if (error instanceof HttpErrorResponse && error.status === 401)
-                  this.usuarioService.deslogar(false);
-                else
-                  return throwError(error.message);
-            }));
+            return next.handle(request);
         }
         else {
             return next.handle(request);

@@ -8,21 +8,21 @@
 
         <mat-form-field appearance="outline" class="form-field-full">
           <mat-label>Email</mat-label>
-          <input type="email" matInput formControlName="email" placeholder="Ex. email@example.com">
-          <mat-error *ngIf="loginForm.get('email').hasError('email') && loginForm.get('email').touched">
+         <input matInput  type="email"  formControlName="email"  placeholder="Ex. email@example.com">
+          <mat-error *ngIf="loginForm.controls['email'].errors?.['email'] && loginForm.controls['email'].touched">
             Por favor informe um email válido
           </mat-error>
-          <mat-error *ngIf="loginForm.get('email').hasError('required') && loginForm.get('email').touched">
+          <mat-error *ngIf="loginForm.controls['email'].errors?.['required'] && loginForm.controls['email'].touched">
             Email é <strong>obrigatório</strong>
-          </mat-error>
+          </mat-error> 
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-field-full">
           <mat-label>Senha</mat-label>
-          <input type="password" matInput formControlName="senha">
-          <mat-error *ngIf="loginForm.get('senha')?.errors?.required  && loginForm.get('senha').touched">Senha é
+          <input matInput type="password"  formControlName="senha">
+           <mat-error  *ngIf="loginForm.controls['senha'].errors?.['required'] && loginForm.controls['senha'].touched">Senha é
             <strong>obrigatória</strong>
-          </mat-error>
+          </mat-error> 
         </mat-form-field>
 
       </mat-card-content>
