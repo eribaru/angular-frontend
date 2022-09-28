@@ -8,8 +8,7 @@ import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [UsuarioNaoAutenticadoGuard]},
-  {
-    path: '', component: PrincipalComponent, canActivate: [UsuarioAutenticadoGuard],
+  { path: '', component: PrincipalComponent, canActivate: [UsuarioAutenticadoGuard],
     children: [
       { path: '', component: HomeComponent }
     ],
