@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
 
     var usuario = this.loginForm.getRawValue() as IUsuario;
     this.usuarioService.logar(usuario).subscribe((response) => {
-        if(!response.sucesso){
+        if(!response.token){
           this.snackBar.open('Falha na autenticação', 'Usuário ou senha incorretos.', {
             duration: 3000
           });

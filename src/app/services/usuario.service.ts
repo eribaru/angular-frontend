@@ -33,6 +33,23 @@ constructor(private httpClient: HttpClient,
 
       
   }
+
+  cadastrar(usuario: IUsuario) : Observable<any> {
+
+    return this.httpClient.post<ILogin>(apiUrlUsuario + "login/", usuario).pipe(
+      tap((resposta) => {
+        if(!resposta.token) {
+          console.error(resposta);
+          return;}
+
+        localStorage.setItem('token', window.btoa (JSON.stringify(resposta.token)));
+        localStorage.setItem('usuario', window.btoa(JSON.stringify(resposta.user)));
+
+        this.router.navigate(['']);
+      }));
+
+      
+  }
   
 
   deslogar() {
