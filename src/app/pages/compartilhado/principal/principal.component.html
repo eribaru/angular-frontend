@@ -1,13 +1,33 @@
-<p>
+<mat-sidenav-container fullscreen>
+  <mat-sidenav mode="side" #sidenav opened position="start">
+    Dados Pessoais
+    <mat-list>
+      <mat-list-item> Informações </mat-list-item>
+      <mat-list-item> Endereço </mat-list-item>
+    </mat-list>
+     <mat-divider></mat-divider>
+     Currículo
+     <mat-nav-list>
+       <mat-list-item> Formação </mat-list-item>
+       <mat-list-item> Experiência </mat-list-item>
+      </mat-nav-list>
+      <mat-divider></mat-divider>
+      <mat-action-list>
+        <button mat-list-item (click)="deslogar()">Sair</button>
+      </mat-action-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <span>Exemplo login</span>
-      <span class="espacamento-toolbar"></span>
-      <button mat-icon-button (click)="deslogar()">
-        <mat-icon>logout</mat-icon>
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
       </button>
+     Erijob
+      <span class="toolbar-spacer"></span>
+     
     </mat-toolbar>
-  </p>
-  
-  <mat-card-content>
-    <router-outlet></router-outlet>
-  </mat-card-content>
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+   
+  </mat-sidenav-content>
+</mat-sidenav-container>

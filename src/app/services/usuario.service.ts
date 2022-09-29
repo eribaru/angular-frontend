@@ -60,7 +60,7 @@ constructor(private httpClient: HttpClient,
       this.router.navigate(['login']);
   }
 
-  get obterUsuarioLogado(): IUsuario| null {
+  public static get obterUsuarioLogado(): IUsuario| null {
     return localStorage.getItem  ('usuario')
       ? JSON.parse(window.atob(localStorage.getItem('usuario')!))
       : null;
