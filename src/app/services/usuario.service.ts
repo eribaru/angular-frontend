@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of, throwError } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ILogin } from '../interfaces/ILogin';
 import { IUsuario } from '../interfaces/IUsuario';
@@ -29,6 +29,9 @@ constructor(private httpClient: HttpClient,
         localStorage.setItem('usuario', window.btoa(JSON.stringify(resposta.user)));
 
         this.router.navigate(['']);
+      }), catchError(error => {
+        console.log('Erro ao logar',typeof(error))
+        throw(error);
       }));
 
       
@@ -90,5 +93,11 @@ constructor(private httpClient: HttpClient,
     }
     // Return an observable with a user-facing error message.
     return throwError(() => new Error('Something bad happened; please try again later.'));
+  }
+
+  logError(message: string, stack: string) {
+    // Send errors to be saved here
+    // The console.log is only for testing this example.
+    console.log('LoggingService: ' + message);
   }
 }

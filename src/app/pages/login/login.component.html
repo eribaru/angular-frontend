@@ -1,11 +1,11 @@
 <mat-card-content class="container">
 
   <mat-card class="card-login">
-    <mat-card-title>Login</mat-card-title>
+    
     <form [formGroup]="loginForm"  novalidate>
 
       <mat-card-content class="conteudo-login">
-
+        <img src="../../assets/images/erijobs.jpeg" class="img1" alt="cinque terre">  
         <mat-form-field appearance="outline" class="form-field-full">
           <mat-label>Email</mat-label>
          <input matInput  type="email"  formControlName="username"  placeholder="Ex. email@example.com">
@@ -30,7 +30,7 @@
     </form>
 
     <mat-card-actions align="end">
-      <button mat-button color="primary" class="full" align="end" (click)="logar()">Entrar</button>
+      <button mat-raised-button color="primary"  align="end" (click)="logar()">Entrar</button>
     </mat-card-actions>
 
   </mat-card>
