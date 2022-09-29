@@ -66,7 +66,7 @@ constructor(private httpClient: HttpClient,
       : null;
   }
 
-  get obterIdUsuarioLogado(): string| null {
+  public static get obterIdUsuarioLogado(): string| null {
     return localStorage.getItem('usuario')
       ? (JSON.parse(window.atob(localStorage.getItem('usuario')!)) as IUsuario).id
       : null;

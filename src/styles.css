@@ -35,8 +35,18 @@ mat-sidenav {
 .toolbar-spacer {
     flex: 1 1 auto;
 }
+
+.espacamento-toolbar {
+    flex: 1 1 auto;
+  }
 mat-divider {
     margin-top: 16px;
     margin-bottom: 16px;
     background-color: rgba(23, 21, 21, 0.5);
 }
+
+
+.my-card {
+    background: lavender;
+    width: 100%;
+} 

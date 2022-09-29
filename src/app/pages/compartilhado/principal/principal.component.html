@@ -6,12 +6,13 @@
       <mat-list-item> Endereço </mat-list-item>
     </mat-list>
      <mat-divider></mat-divider>
-     Currículo
+     <div *ngIf="temPermissaoCandidato" >Currículo
      <mat-nav-list>
        <mat-list-item> Formação </mat-list-item>
        <mat-list-item> Experiência </mat-list-item>
       </mat-nav-list>
       <mat-divider></mat-divider>
+    </div>
       <mat-action-list>
         <button mat-list-item (click)="deslogar()">Sair</button>
       </mat-action-list>

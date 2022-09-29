@@ -44,11 +44,13 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import { TokenInterceptor } from './services/interceptors/token.interceptor';
 import { GlobalErrorHandler } from './services/handlers/global.handler';
+import { EmpresaComponent } from './pages/empresa/empresa.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
+    EmpresaComponent,
     PrincipalComponent
   ],
   imports: [
