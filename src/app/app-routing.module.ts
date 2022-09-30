@@ -6,6 +6,7 @@ import { UsuarioAutenticadoGuard } from './services/guards/usuario-autenticado.g
 import { UsuarioNaoAutenticadoGuard } from './services/guards/usuario-nao-autenticado.guard';
 import { LoginComponent } from './pages/login/login.component';
 import { EmpresaComponent } from './pages/empresa/empresa.component';
+import { EmpresaListaComponent } from './pages/empresa/empresa-lista.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [UsuarioNaoAutenticadoGuard]},
@@ -16,7 +17,7 @@ const routes: Routes = [
       { path: 'vaga', component: HomeComponent }
     ],
   },
-  { path: 'empresa', component: EmpresaComponent, canActivate: [UsuarioAutenticadoGuard]},
+  { path: 'empresa-lista', component: EmpresaListaComponent, canActivate: [UsuarioAutenticadoGuard]},
 ];
 
 @NgModule({

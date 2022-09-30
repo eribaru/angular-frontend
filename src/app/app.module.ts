@@ -45,13 +45,16 @@ import {MatTreeModule} from '@angular/material/tree';
 import { TokenInterceptor } from './services/interceptors/token.interceptor';
 import { GlobalErrorHandler } from './services/handlers/global.handler';
 import { EmpresaComponent } from './pages/empresa/empresa.component';
+import { EmpresaListaComponent } from './pages/empresa/empresa-lista.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
     EmpresaComponent,
+    EmpresaListaComponent,
     PrincipalComponent
+    
   ],
   imports: [
     BrowserModule,
