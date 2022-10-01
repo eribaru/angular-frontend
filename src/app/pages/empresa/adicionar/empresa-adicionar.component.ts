@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common'
 
 @Component({
-  selector: 'app-empresa',
-  templateUrl: './empresa.component.html',
-  styleUrls: ['./empresa.component.css']
+  selector: 'app-empresa-adicionar',
+  templateUrl: './empresa-adicionar.component.html',
+  styleUrls: ['./empresa-adicionar.component.css']
 })
-export class EmpresaComponent implements OnInit {
+export class EmpresaAdicionarComponent implements OnInit {
 
   constructor(private location: Location) {}
 

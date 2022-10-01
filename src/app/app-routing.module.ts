@@ -5,8 +5,10 @@ import { HomeComponent } from './pages/home/home.component';
 import { UsuarioAutenticadoGuard } from './services/guards/usuario-autenticado.guard';
 import { UsuarioNaoAutenticadoGuard } from './services/guards/usuario-nao-autenticado.guard';
 import { LoginComponent } from './pages/login/login.component';
-import { EmpresaComponent } from './pages/empresa/empresa.component';
-import { EmpresaListaComponent } from './pages/empresa/empresa-lista.component';
+import { EmpresaListaComponent } from './pages/empresa/lista/empresa-lista.component';
+import { EmpresaDetalheComponent } from './pages/empresa/detalhe/empresa-detalhe.component';
+import { EmpresaAtualizarComponent } from './pages/empresa/atualizar/empresa-atualizar.component';
+import { EmpresaAdicionarComponent } from './pages/empresa/adicionar/empresa-adicionar.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [UsuarioNaoAutenticadoGuard]},
@@ -17,7 +19,14 @@ const routes: Routes = [
       { path: 'vaga', component: HomeComponent }
     ],
   },
-  { path: 'empresa-lista', component: EmpresaListaComponent, canActivate: [UsuarioAutenticadoGuard]},
+  { path: 'empresa-lista', component: EmpresaListaComponent, canActivate: [UsuarioAutenticadoGuard],
+  children: [
+    { path: 'empresa-adicionar', component: EmpresaAdicionarComponent, canActivate: [UsuarioAutenticadoGuard]},
+    { path: 'atualizar/:id', component: EmpresaAtualizarComponent, canActivate: [UsuarioAutenticadoGuard]},
+    { path: 'detalhe/:id', component: EmpresaDetalheComponent, canActivate: [UsuarioAutenticadoGuard]},
+  ]
+  },
+ 
 ];
 
 @NgModule({

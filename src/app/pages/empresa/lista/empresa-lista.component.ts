@@ -1,8 +1,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { IEmpresa } from '../../interfaces/IEmpresa';
-import { ApiService } from '../../services/api.service';
+import { IEmpresa } from '../../../interfaces/IEmpresa';
+import { ApiService } from '../../../services/api.service';
 import { Location } from '@angular/common'
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';

@@ -44,15 +44,19 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import { TokenInterceptor } from './services/interceptors/token.interceptor';
 import { GlobalErrorHandler } from './services/handlers/global.handler';
-import { EmpresaComponent } from './pages/empresa/empresa.component';
-import { EmpresaListaComponent } from './pages/empresa/empresa-lista.component';
+import { EmpresaListaComponent } from './pages/empresa/lista/empresa-lista.component';
+import { EmpresaDetalheComponent } from './pages/empresa/detalhe/empresa-detalhe.component';
+import { EmpresaAtualizarComponent } from './pages/empresa/atualizar/empresa-atualizar.component';
+import { EmpresaAdicionarComponent } from './pages/empresa/adicionar/empresa-adicionar.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    EmpresaComponent,
+    EmpresaDetalheComponent,
     EmpresaListaComponent,
+    EmpresaAdicionarComponent,
+    EmpresaAtualizarComponent,
     PrincipalComponent
     
   ],
