@@ -1,0 +1,48 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button (click)="voltar()">
+      <mat-icon>arrow_back </mat-icon>
+    </button>
+   Nova empresa
+   
+   
+  </mat-toolbar> <span class="toolbar-spacer"></span>
+  <mat-card-content class="container">
+
+    <mat-card class="card-empresa-adicionar">
+      
+      <form [formGroup]="empresaForm"  novalidate>
+  
+        <mat-card-content class="conteudo-empresa-adicionar">
+          
+          <mat-form-field appearance="outline" class="form-field-full">
+            <mat-label>Nome</mat-label>
+           <input matInput  type="text"  formControlName="nome"  >           
+            <mat-error *ngIf="empresaForm.controls['nome'].errors?.['required'] && empresaForm.controls['nome'].touched">
+              Nome é <strong>obrigatório</strong>
+            </mat-error> 
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="form-field-full">
+            <mat-label>CNPJ</mat-label>
+           <input matInput  type="text"  formControlName="cnpj"  >           
+            <mat-error *ngIf="empresaForm.controls['cnpj'].errors?.['required'] && empresaForm.controls['cnpj'].touched">
+              CNPJ é <strong>obrigatório</strong>
+            </mat-error> 
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="form-field-full">
+            <mat-label>Ramo</mat-label>
+           <input matInput  type="text"  formControlName="ramo"  >           
+            <mat-error *ngIf="empresaForm.controls['ramo'].errors?.['required'] && empresaForm.controls['cnpj'].touched">
+              Ramo é <strong>obrigatório</strong>
+            </mat-error> 
+          </mat-form-field>
+        </mat-card-content>
+  
+      </form>
+  
+      <mat-card-actions align="end">
+        <button mat-raised-button color="primary"  align="end" (click)="salvar()">Salvar</button>
+      </mat-card-actions>
+  
+    </mat-card>
+  
+  </mat-card-content>

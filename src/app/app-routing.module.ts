@@ -21,12 +21,12 @@ const routes: Routes = [
   },
   { path: 'empresa-lista', component: EmpresaListaComponent, canActivate: [UsuarioAutenticadoGuard],
   children: [
-    { path: 'empresa-adicionar', component: EmpresaAdicionarComponent, canActivate: [UsuarioAutenticadoGuard]},
-    { path: 'atualizar/:id', component: EmpresaAtualizarComponent, canActivate: [UsuarioAutenticadoGuard]},
-    { path: 'detalhe/:id', component: EmpresaDetalheComponent, canActivate: [UsuarioAutenticadoGuard]},
+   
   ]
   },
- 
+  { path: 'empresa-adicionar', component: EmpresaAdicionarComponent, canActivate: [UsuarioAutenticadoGuard]},
+    { path: 'empresa-atualizar/:id', component: EmpresaAtualizarComponent, canActivate: [UsuarioAutenticadoGuard]},
+    { path: 'empresa-detalhe/:id', component: EmpresaDetalheComponent, canActivate: [UsuarioAutenticadoGuard]}
 ];
 
 @NgModule({

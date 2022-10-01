@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-empresa-lista',
   templateUrl: './empresa-lista.component.html',
-  styleUrls: ['./empresa-lista.component.css']
+  styleUrls: ['./empresa-lista.component.scss']
 })
 export class EmpresaListaComponent implements OnInit {
   [x: string]: any;
@@ -30,11 +30,15 @@ export class EmpresaListaComponent implements OnInit {
     })
   }
 
+  public redirectToNew = () => {
+    this._router.navigate(['empresa-adicionar/']);
+  }
+
   public redirectToDetails = (id: string) => {
-    
+    this._router.navigate(['empresa-detalhe/'+id]);
   }
   public redirectToUpdate = (id: string) => {
-    
+    this._router.navigate(['empresa-atualizar/'+id]);
   }
   public redirectToDelete = (id: string) => {
     this.snackBar.open('Sucesso', 'Item foi apagado', {

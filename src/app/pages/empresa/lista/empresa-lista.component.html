@@ -6,6 +6,7 @@
  
  
 </mat-toolbar> <span class="toolbar-spacer"></span>
+<div>
 <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="nome">
       <th mat-header-cell *matHeaderCellDef> Nome </th>
@@ -51,3 +52,9 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+  <div class=".fab-container">
+    <button mat-fab color="primary" (click)="redirectToNew()" aria-label="Icone para adicionar uma nova empresa">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</div>

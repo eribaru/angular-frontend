@@ -1,0 +1,33 @@
+table {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    min-width: 500px;
+    max-height: 90%;
+}
+
+th.mat-header-cell {
+    text-align: left;
+    max-width: 300px;
+}
+
+.fab-container {
+    position: relative;
+    bottom: 15px;
+    right: 15px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: right;
+  
+    > div {
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: right;
+      margin-bottom: 5px;
+  
+      button {
+        margin-bottom: 17px;
+      }
+    }
+  }
