@@ -1,10 +1,9 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { IEmpresa } from '../interfaces/IEmpresa';
 
 const apiUrl = environment.apiUrl+'api/v1';
 
@@ -23,13 +22,26 @@ export class ApiService {
   }*/
 
   public getData = (route: string) => {
-    return this.httpClient.get<IEmpresa[]>(apiUrl+"/"+route).pipe(
+    return this.httpClient.get<Object[]>(apiUrl+"/"+route).pipe(
       tap((resposta) => {
         if(!resposta) {
           console.error(resposta);
           return;}
       }), catchError(error => {
         console.log('Erro ao listar',typeof(error))
+        throw(error);
+      }));
+  }
+
+
+  public delete = (route: string) => {
+    return this.httpClient.delete(apiUrl+"/"+route).pipe(
+      tap((resposta) => {
+        if(!resposta) {
+          console.error(resposta);
+          return;}          
+      }), catchError(error => {
+        console.log('Erro ao delete',typeof(error))
         throw(error);
       }));
   }
@@ -63,9 +75,7 @@ export class ApiService {
     }*/
   
  /*
-  public delete = (route: string) => {
-    return this.http.delete(this.createCompleteRoute(route, apiUrl));
-  }*/
+  */
   /*public update1 = (route: string, body:Object) => {
     return this.http.put(this.createCompleteRoute(route, apiUrl), body, this.generateHeaders());
   }

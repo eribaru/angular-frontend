@@ -3,5 +3,5 @@ export interface IEmpresa {
     cnpj: string;
     nome: string;
     ramo: string;
-    sede?: any;
+    sede: number;
 }

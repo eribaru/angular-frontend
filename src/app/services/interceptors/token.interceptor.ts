@@ -18,8 +18,7 @@ export class TokenInterceptor implements HttpInterceptor {
         if (token && requestUrl[2] === apiUrl[2]) {
             request = request.clone({
                 setHeaders: {
-                    Authorization: `Token ${token}`,
-                    token: `${token}`
+                    Authorization: `Token ${token}`
                 }
             });
             return next.handle(request).pipe(
