@@ -1,0 +1,6 @@
+# Ignore Artifacts:
+build
+coverage
+.angular
+.vscode
+
