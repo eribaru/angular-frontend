@@ -6,13 +6,13 @@
       <mat-list-item> Endereço </mat-list-item>
     </mat-list>
      <mat-divider></mat-divider>
-     <div *ngIf="temPermissaoCandidato" >Currículo
-     <mat-nav-list>
-       <mat-list-item> Formação </mat-list-item>
-       <mat-list-item> Experiência </mat-list-item>
-      </mat-nav-list>
-      <mat-divider></mat-divider>
-    </div>
+<!--     <div *ngIf="temPermissaoCandidato" >Currículo-->
+<!--     <mat-nav-list>-->
+<!--       <mat-list-item> Formação </mat-list-item>-->
+<!--       <mat-list-item> Experiência </mat-list-item>-->
+<!--      </mat-nav-list>-->
+<!--      <mat-divider></mat-divider>-->
+<!--    </div>-->
       <mat-action-list>
         <button mat-list-item (click)="deslogar()">Sair</button>
       </mat-action-list>
@@ -24,11 +24,11 @@
       </button>
      Erijob
       <span class="toolbar-spacer"></span>
-     
+
     </mat-toolbar>
     <div class="main-content">
       <router-outlet></router-outlet>
     </div>
-   
+
   </mat-sidenav-content>
 </mat-sidenav-container>
