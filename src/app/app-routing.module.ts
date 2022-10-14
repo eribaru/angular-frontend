@@ -15,13 +15,12 @@ const routes: Routes = [
   { path: '', component: PrincipalComponent, canActivate: [UsuarioAutenticadoGuard],
     children: [
       { path: '', component: HomeComponent },
-    
       { path: 'vaga', component: HomeComponent }
     ],
   },
   { path: 'empresa-lista', component: EmpresaListaComponent, canActivate: [UsuarioAutenticadoGuard],
   children: [
-   
+
   ]
   },
   { path: 'empresa-adicionar', component: EmpresaAdicionarComponent, canActivate: [UsuarioAutenticadoGuard]},

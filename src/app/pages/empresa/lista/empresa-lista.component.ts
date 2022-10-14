@@ -1,55 +1,60 @@
-
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { IEmpresa } from '../../../interfaces/IEmpresa';
 import { ApiService } from '../../../services/api.service';
-import { Location } from '@angular/common'
+import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-empresa-lista',
   templateUrl: './empresa-lista.component.html',
-  styleUrls: ['./empresa-lista.component.scss']
+  styleUrls: ['./empresa-lista.component.scss'],
 })
 export class EmpresaListaComponent implements OnInit {
   [x: string]: any;
-  public displayedColumns = ['nome', 'cnpj', 'ramo', 'update', 'delete'
-  //public displayedColumns = ['nome', 'cnpj', 'ramo','sede','details', 'update', 'delete'
-];
+  public displayedColumns = [
+    'nome',
+    'cnpj',
+    'ramo',
+    'update',
+    'delete',
+    //public displayedColumns = ['nome', 'cnpj', 'ramo','sede','details', 'update', 'delete'
+  ];
   public dataSource = new MatTableDataSource<IEmpresa>();
-  constructor(private repoService: ApiService,private location: Location,private _router: Router,
-    private snackBar: MatSnackBar) { }
+  constructor(
+    private repoService: ApiService,
+    private location: Location,
+    private _router: Router,
+    private snackBar: MatSnackBar
+  ) {}
   ngOnInit() {
     this.getAllEmpresa();
   }
   public getAllEmpresa = () => {
-    this.repoService.getData('empresas')
-    .subscribe(res => {
+    this.repoService.getData('empresas').subscribe((res) => {
       this.dataSource.data = res as IEmpresa[];
-    })
-  }
+    });
+  };
 
-  public redirectToNew = () => {
-    this._router.navigate(['empresa-adicionar/']);
-  }
+  public redirectToCreateCompany = () => {
+    return this._router.navigate(['empresa-adicionar/']);
+  };
 
   public redirectToDetails = (id: string) => {
-    this._router.navigate(['empresa-detalhe/'+id]);
-  }
+    return this._router.navigate(['empresa-detalhe/' + id]);
+  };
   public redirectToUpdate = (id: string) => {
-    this._router.navigate(['empresa-atualizar/'+id]);
-  }
+    return this._router.navigate(['empresa-atualizar/' + id]);
+  };
   public redirectToDelete = (id: string) => {
     this.snackBar.open('Sucesso', 'Item foi apagado', {
-      duration: 3000
+      duration: 3000,
     });
-    this.repoService.delete('empresas/'+id)
-    .subscribe(data => {
-     
+    this.repoService.delete('empresas/' + id).subscribe((data) => {
       this.reloadComponent();
-    })
-  }
+    });
+  };
 
   voltar(): void {
     this.location.back();
@@ -59,5 +64,5 @@ export class EmpresaListaComponent implements OnInit {
     this._router.routeReuseStrategy.shouldReuseRoute = () => false;
     this._router.onSameUrlNavigation = 'reload';
     this._router.navigate(['empresa-lista']);
-}
+  }
 }
