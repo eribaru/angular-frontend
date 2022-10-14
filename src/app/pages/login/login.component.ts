@@ -7,47 +7,51 @@ import { UsuarioService } from '../../services/usuario.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup = new FormGroup({});
-  
 
-  constructor(private formBuilder: FormBuilder,
-              private usuarioService: UsuarioService,
-              private snackBar: MatSnackBar) {  
-               }
+  constructor(
+    private formBuilder: FormBuilder,
+    private usuarioService: UsuarioService,
+    private snackBar: MatSnackBar
+  ) {}
+
+  get f() {
+    return this.loginForm.controls;
+  }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       username: [null, [Validators.required, Validators.email]],
-      password: [null, Validators.required]
+      password: [null, Validators.required],
     });
   }
 
-  get f() { return this.loginForm.controls; }
-
- 
-  
-  logar(){
-    if(this.loginForm.invalid) {
+  logar() {
+    if (this.loginForm.invalid) {
       this.snackBar.open('Erro no prenchimento', 'Prrencha todos os campos.', {
-        duration: 3000
+        duration: 3000,
       });
-      return};
+      return;
+    }
 
-    var usuario = this.loginForm.getRawValue() as IUsuario;
+    const usuario = this.loginForm.getRawValue() as IUsuario;
     try {
       this.usuarioService.logar(usuario).subscribe((response) => {
-        if(!response.token){
-          this.snackBar.open('Falha na autenticação', 'Usuário ou senha incorretos.', {
-            duration: 3000
-          });
+        if (!response.token) {
+          this.snackBar.open(
+            'Falha na autenticação',
+            'Usuário ou senha incorretos.',
+            {
+              duration: 3000,
+            }
+          );
         }
-    })
+      });
     } catch (error) {
-      console.log("Erro no login.component",error)
+      console.log('Erro no login.component', error);
     }
-    
   }
 }
