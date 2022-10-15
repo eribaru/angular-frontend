@@ -24,7 +24,7 @@ export class TokenInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const token = this.usuarioService.obterTokenUsuario;
     // eslint-disable-next-line no-debugger
-    debugger;
+    //debugger;
     const requestUrl: Array<any> = request.url.split('/');
     const apiUrl: Array<any> = environment.apiUrl.split('/');
 

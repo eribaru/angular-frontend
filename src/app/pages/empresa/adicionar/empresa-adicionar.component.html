@@ -32,10 +32,10 @@
             <mat-error *ngIf="empresaForm.controls['ramo'].errors?.['required'] && empresaForm.controls['cnpj'].touched">
               Ramo é <strong>obrigatório</strong>
             </mat-error>
-          </mat-form-field>
-            <mat-form-field appearance="outline" class="form-field-full">
+          </mat-form-field >
+          <!--<mat-form-field appearance="outline" class="form-field-full"  *ngIf = "cidadesCarregadas">
             <mat-label>Sede</mat-label>
-           <input [formControl]="empresaForm.controls['sede']" [matAutocomplete]="auto" matInput placeholder="ex: Belo horizonte..." type="text">
+           <input  [matAutocomplete]="auto" matInput placeholder="ex: Belo horizonte..." type="text">
             <mat-error *ngIf="empresaForm.controls['sede'].errors?.['required'] && empresaForm.controls['sede'].touched">
               Sede é um campo <strong>obrigatório</strong>
             </mat-error>
@@ -44,7 +44,7 @@
                   {{ cidade.nom_cidade }}
                 </mat-option>
             </mat-autocomplete>
-            </mat-form-field>
+            </mat-form-field>-->
         </mat-card-content>
 
       </form>

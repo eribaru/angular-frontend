@@ -32,6 +32,22 @@ export class ApiService {
     );
   };
 
+   /**
+   * Generic out data to API
+   * @param route
+   * @param data
+   */
+    public putData = (route: string, data: object) => {
+      const url = `${apiUrl}/${route}`;
+      return this.httpClient.put(url, data).pipe(
+        tap(console.log),
+        catchError((error) => {
+          console.error(error);
+          return error;
+        })
+      );
+    };
+
   /**
    * Generic parser data
    * @param route

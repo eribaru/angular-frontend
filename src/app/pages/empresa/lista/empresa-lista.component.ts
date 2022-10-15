@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { IEmpresa } from '../../../interfaces/IEmpresa';
 import { ApiService } from '../../../services/api.service';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-empresa-lista',
@@ -42,10 +43,11 @@ export class EmpresaListaComponent implements OnInit {
   };
 
   public redirectToDetails = (id: string) => {
-    return this._router.navigate(['empresa-detalhe/' + id]);
+    return this._router.navigate(['empresa-detalhe/' + id,{}]);
   };
-  public redirectToUpdate = (id: string) => {
-    return this._router.navigate(['empresa-atualizar/' + id]);
+  public redirectToUpdate = (empresa: any) => {
+    //dataSource.
+    return this._router.navigate(['empresa-atualizar/' + empresa.id],{ state: { example: empresa} } );
   };
   public redirectToDelete = (id: string) => {
     this.snackBar.open('Sucesso', 'Item foi apagado', {
@@ -65,4 +67,5 @@ export class EmpresaListaComponent implements OnInit {
     this._router.onSameUrlNavigation = 'reload';
     this._router.navigate(['empresa-lista']);
   }
+
 }

@@ -7,14 +7,13 @@ export class LocalStorageService {
 
   set(key: string, value: string) {
     localStorage.setItem(key, value);
-}
+  }
 
-get(key: string) {
-    return localStorage.getItem(key);
-}
+  get(key: string) {
+      return localStorage.getItem(key);
+  }
 
-remove(key: string) {
-    localStorage.removeItem(key);
-}
-getItem()
+  remove(key: string) {
+      localStorage.removeItem(key);
+  }
 }
