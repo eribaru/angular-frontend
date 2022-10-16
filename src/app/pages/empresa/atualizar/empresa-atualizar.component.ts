@@ -7,6 +7,7 @@ import { debounceTime, distinctUntilChanged, Observable, of, startWith, switchMa
 import {FormControl} from '@angular/forms';
 import { Router } from '@angular/router';
 import { IEmpresa } from 'src/app/interfaces/IEmpresa';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-empresa-atualizar',
   templateUrl: './empresa-atualizar.component.html',
@@ -37,13 +38,13 @@ export class EmpresaAtualizarComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private location: Location,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private snackBar: MatSnackBar
     
   ) {
     const navigation = this.router.getCurrentNavigation();
     if(navigation!=null){
     const state = navigation.extras.state as {example: IEmpresa};
-    debugger
     if(state!=null && state.example!=null){
       this.empresa= state.example;
     }
@@ -79,13 +80,19 @@ export class EmpresaAtualizarComponent implements OnInit {
   salvar(): void { 
     console.log(this.empresaForm.value);
     this.updateCompanyDataToApi();
-    this.location.back();
-    this.router.navigate(['empresa-lista']);
+   
   }
 
   public updateCompanyDataToApi = () => {
     this.apiService.putData('empresas/'+this.empresa.id, this.empresaForm.value).subscribe({
-      next: (data) => console.log(data),
+      next: (data) => {
+        this.snackBar.open('Sucesso', 'Item foi atualizado', {
+          duration: 3000,
+        });
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate(['empresa-lista']);
+      },
       error: (error) => {
         console.error('There was an error!', error);
       },

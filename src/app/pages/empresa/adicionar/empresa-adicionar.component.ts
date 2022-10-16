@@ -3,8 +3,12 @@ import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 import { ICidade } from '../../../interfaces/ICidade';
+import { Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, Observable, of, startWith, switchMap } from 'rxjs';
 import {FormControl} from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationService } from '../../../services/notification.service';
+
 
 @Component({
   selector: 'app-empresa-adicionar',
@@ -12,6 +16,7 @@ import {FormControl} from '@angular/forms';
   styleUrls: ['./empresa-adicionar.component.css'],
 })
 export class EmpresaAdicionarComponent implements OnInit {
+  cnpjmask = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
   empresaForm: FormGroup = new FormGroup({});
   cidadesControl = new FormControl('');
   options: string[] = ['One', 'Two', 'Three'];
@@ -31,9 +36,11 @@ export class EmpresaAdicionarComponent implements OnInit {
   ]);
 
   constructor(
+    private router: Router,
     private formBuilder: FormBuilder,
     private location: Location,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private snackBar: MatSnackBar
     
   ) {
    
@@ -41,7 +48,7 @@ export class EmpresaAdicionarComponent implements OnInit {
 
   ngOnInit(): void {
     this.empresaForm = this.formBuilder.group({
-      cnpj: [null, [Validators.required, Validators.maxLength(16)]],
+      cnpj: ['', [Validators.required, Validators.maxLength(16)]],
       nome: [null, Validators.required],
       ramo: [null, Validators.required],
       sede: [null, Validators.required],
@@ -63,14 +70,26 @@ export class EmpresaAdicionarComponent implements OnInit {
   salvar(): void { 
     console.log(this.empresaForm.value);
     this.saveCompanyDataToApi();
-    this.location.back();
+    
   }
 
   public saveCompanyDataToApi = () => {
     this.apiService.postData('empresas', this.empresaForm.value).subscribe({
-      next: (data) => console.log(data),
+      next: (data) => {
+        this.snackBar.open('Sucesso', 'Item foi Salvo', {
+          duration: 3000,
+        });
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate(['empresa-lista']);
+      },
       error: (error) => {
         console.error('There was an error!', error);
+        if(error.status==400 && error.error['cnpj'] && error.error['cnpj'] [0]=="empresa with this cnpj already exists."){
+          throw 'CNPJ já cadastrado';
+        }else{
+          throw error;
+        }
       },
     });
   };

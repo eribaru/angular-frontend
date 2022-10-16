@@ -50,22 +50,24 @@ export class EmpresaListaComponent implements OnInit {
     return this._router.navigate(['empresa-atualizar/' + empresa.id],{ state: { example: empresa} } );
   };
   public redirectToDelete = (id: string) => {
-    this.snackBar.open('Sucesso', 'Item foi apagado', {
-      duration: 3000,
-    });
     this.repoService.delete('empresas/' + id).subscribe((data) => {
+      this.snackBar.open('Sucesso', 'Item foi apagado', {
+        duration: 3000,
+      });
       this.reloadComponent();
     });
   };
 
   voltar(): void {
-    this.location.back();
+    this._router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this._router.onSameUrlNavigation = 'reload';
+    this._router.navigate(['']);
   }
 
   reloadComponent() {
     this._router.routeReuseStrategy.shouldReuseRoute = () => false;
     this._router.onSameUrlNavigation = 'reload';
-    this._router.navigate(['empresa-lista']);
+    this._router.navigate(['']);
   }
 
 }

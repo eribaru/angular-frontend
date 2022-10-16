@@ -48,6 +48,7 @@ import { EmpresaListaComponent } from './pages/empresa/lista/empresa-lista.compo
 import { EmpresaDetalheComponent } from './pages/empresa/detalhe/empresa-detalhe.component';
 import { EmpresaAtualizarComponent } from './pages/empresa/atualizar/empresa-atualizar.component';
 import { EmpresaAdicionarComponent } from './pages/empresa/adicionar/empresa-adicionar.component';
+import { NgxMaskModule } from 'ngx-mask';
 @NgModule({
   declarations: [
     AppComponent,
@@ -102,6 +103,7 @@ import { EmpresaAdicionarComponent } from './pages/empresa/adicionar/empresa-adi
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
+    NgxMaskModule.forRoot()
   ],
   providers: [
     { provide: ErrorHandler, useClass: GlobalErrorHandler },

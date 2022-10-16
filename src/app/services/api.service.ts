@@ -26,8 +26,8 @@ export class ApiService {
     return this.httpClient.post(url, data).pipe(
       tap(console.log),
       catchError((error) => {
-        console.error(error);
-        return error;
+        console.log('Erro ao fazer post', typeof error);
+        throw error;
       })
     );
   };
