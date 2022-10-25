@@ -2,8 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './pages/login/login.component';
-import { HomeComponent } from './pages/home/home.component';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -44,6 +43,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import { TokenInterceptor } from './services/interceptors/token.interceptor';
 import { GlobalErrorHandler } from './services/handlers/global.handler';
+import { LoginComponent } from './pages/login/login.component';
+import { CadastroComponent } from './pages/cadastro/cadastro.component';
+import { HomeComponent } from './pages/home/home.component';
 import { EmpresaListaComponent } from './pages/empresa/lista/empresa-lista.component';
 import { EmpresaDetalheComponent } from './pages/empresa/detalhe/empresa-detalhe.component';
 import { EmpresaAtualizarComponent } from './pages/empresa/atualizar/empresa-atualizar.component';
@@ -54,6 +56,7 @@ import { NgxMaskModule } from 'ngx-mask';
     AppComponent,
     LoginComponent,
     HomeComponent,
+    CadastroComponent,
     EmpresaDetalheComponent,
     EmpresaListaComponent,
     EmpresaAdicionarComponent,

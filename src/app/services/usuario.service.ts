@@ -81,23 +81,10 @@ export class UsuarioService {
   }
 
   cadastrar(usuario: IUsuario): Observable<any> {
-    return this.httpClient.post<ILogin>(apiUrlUsuario + 'login/', usuario).pipe(
+    return this.httpClient.post<ILogin>(apiUrlUsuario + 'api/v1/contas/registrar/', usuario).pipe(
       tap((resposta) => {
-        if (!resposta.token) {
-          console.error(resposta);
-          return;
-        }
-
-        localStorage.setItem(
-          'token',
-          window.btoa(JSON.stringify(resposta.token))
-        );
-        localStorage.setItem(
-          'usuario',
-          window.btoa(JSON.stringify(resposta.user))
-        );
-
-        this.router.navigate(['']);
+        
+        //this.router.navigate(['']);
       })
     );
   }
