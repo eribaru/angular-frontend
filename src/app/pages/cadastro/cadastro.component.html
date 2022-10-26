@@ -28,6 +28,9 @@
             <mat-error *ngIf="cadastroForm.controls['cpf'].errors?.['required'] && cadastroForm.controls['cpf'].touched">
                 CPF é <strong>obrigatório</strong>
             </mat-error>
+            <mat-error *ngIf="cadastroForm.controls['cpf'].errors?.['cpf'] && cadastroForm.controls['cpf'].touched">
+              CPF é <strong>inválido</strong>
+            </mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline" class="form-field-full">
             <mat-label>Data nascimento</mat-label>

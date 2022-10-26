@@ -38,7 +38,7 @@ export class CadastroComponent implements OnInit {
       password: ['', [ Validators.required,  Validators.minLength(6), Validators.maxLength(40) ] ],
       confirmPassword: ['', Validators.required],
     },{
-      validators: [Validation.match('password', 'confirmPassword')]
+      validators: [Validation.match('password', 'confirmPassword'),Validation.cpf('cpf')]
     });
   }
 

@@ -1,4 +1,5 @@
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~bootstrap/dist/css/bootstrap.min.css';
 
 html,
 body {
@@ -21,11 +22,11 @@ mat-sidenav {
     width: 280px;
     padding:15px;
 }
-.mat-drawer { 
+.mat-drawer {
     background-color: hsl(217, 15%, 78%);
     color:#fff
 }
-.mat-list { 
+.mat-list {
     background-color: #c0c6d0;
     color:#fff
 }
@@ -49,7 +50,7 @@ mat-divider {
 .my-card {
     background: lavender;
     width: 100%;
-} 
+}
 
 table {
     width: 100%;

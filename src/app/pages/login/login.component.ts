@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IUsuario } from '../../interfaces/IUsuario';
 import { UsuarioService } from '../../services/usuario.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup = new FormGroup({});
 
   constructor(
+    private _router: Router,
     private formBuilder: FormBuilder,
     private usuarioService: UsuarioService,
     private snackBar: MatSnackBar
@@ -27,6 +29,10 @@ export class LoginComponent implements OnInit {
       username: [null, [Validators.required, Validators.email]],
       password: [null, Validators.required],
     });
+  }
+
+  cadastrar(){
+    return this._router.navigate(['cadastro',{}]);
   }
 
   logar() {

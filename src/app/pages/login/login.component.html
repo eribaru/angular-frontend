@@ -1,11 +1,11 @@
 <mat-card-content class="container">
 
   <mat-card class="card-login">
-    
+
     <form [formGroup]="loginForm"  novalidate>
 
       <mat-card-content class="conteudo-login">
-        <img src="../../assets/images/erijobs.jpeg" class="img1" alt="cinque terre">  
+        <img src="../../assets/images/erijobs.jpeg" class="img1" alt="cinque terre">
         <mat-form-field appearance="outline" class="form-field-full">
           <mat-label>Email</mat-label>
          <input matInput  type="email"  formControlName="username"  placeholder="Ex. email@example.com">
@@ -14,7 +14,7 @@
           </mat-error>
           <mat-error *ngIf="loginForm.controls['username'].errors?.['required'] && loginForm.controls['username'].touched">
             Email é <strong>obrigatório</strong>
-          </mat-error> 
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-field-full">
@@ -22,17 +22,20 @@
           <input matInput type="password"  formControlName="password">
            <mat-error  *ngIf="loginForm.controls['password'].errors?.['required'] && loginForm.controls['password'].touched">Senha é
             <strong>obrigatória</strong>
-          </mat-error> 
+          </mat-error>
         </mat-form-field>
 
       </mat-card-content>
 
     </form>
-
-    <mat-card-actions align="end">
-      <button mat-raised-button color="primary"  align="end" (click)="logar()">Entrar</button>
-    </mat-card-actions>
-
+      <div class="form-group row">
+        <div class="col-sm-6">
+            <button mat-button color="primary"  align="start" (click)="cadastrar()">Cadastrar</button>
+        </div>
+         <div class="col-sm-6" align="end">
+            <button mat-raised-button color="primary"  align="right|end" (click)="logar()">Entrar</button>
+         </div>
+      </div>
   </mat-card>
 
 </mat-card-content>
