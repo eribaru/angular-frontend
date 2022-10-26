@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IUsuario } from '../../interfaces/IUsuario';
 import {TipoPerfilEnum, TipoPerfilMapping} from "../../interfaces/TipoPerfil.enum";
+import Validation from "../../utils/Validation";
 import { UsuarioService } from '../../services/usuario.service';
 import {FormControl} from '@angular/forms';
 @Component({
@@ -12,7 +13,7 @@ import {FormControl} from '@angular/forms';
 })
 export class CadastroComponent implements OnInit {
   tipoControl = new FormControl<TipoPerfilEnum | null>(null, Validators.required);
-  confirmeSenhaControl = new FormControl<String | null>(null, Validators.required);
+
   cadastroForm: FormGroup = new FormGroup({});
   public TipoPerfilMapping = TipoPerfilMapping;
 
@@ -32,21 +33,29 @@ export class CadastroComponent implements OnInit {
     this.cadastroForm = this.formBuilder.group({
       username: [null, [Validators.required, Validators.email]],
       nome: [null, Validators.required],
-      password: [null, Validators.required],
       cpf: [null, Validators.required],
       date_of_birth: [null, Validators.required],
+      password: ['', [ Validators.required,  Validators.minLength(6), Validators.maxLength(40) ] ],
+      confirmPassword: ['', Validators.required],
+    },{
+      validators: [Validation.match('password', 'confirmPassword')]
     });
   }
 
-  get senhasNaoConferem() {
-    return (
-      true
-      //this.cadastroForm.controls['passowrd'].value !=      this.confirmeSenhaControl.value
-    );
-  }
+
 
   cadastrar() {
-    if (this.cadastroForm.invalid) {
+    if (this.cadastroForm.invalid && this.tipoControl.invalid) {
+      if(this.cadastroForm.invalid){
+        Object.keys(this.cadastroForm.controls).forEach(field => { // {1}
+          const control = this.cadastroForm.get(field);            // {2}
+          if(control!=null)
+            control.markAsTouched({ onlySelf: true });       // {3}
+        });
+      }
+      if(this.tipoControl.invalid) {
+        this.tipoControl.markAsTouched({ onlySelf: true });
+      }
       this.snackBar.open('Erro no prenchimento', 'Prrencha todos os campos.', {
         duration: 3000,
       });

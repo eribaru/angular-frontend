@@ -7,7 +7,7 @@
         <mat-card-content class="conteudo-cadastro">
             <mat-form-field appearance="outline" class="form-field-full">
                 <mat-label>Nome</mat-label>
-               <input matInput  type="text"  formControlName="nome"  placeholder="Ex. João">               
+               <input matInput  type="text"  formControlName="nome"  placeholder="Ex. João">
                 <mat-error *ngIf="cadastroForm.controls['nome'].errors?.['required'] && cadastroForm.controls['nome'].touched">
                   Nome é <strong>obrigatório</strong>
                 </mat-error>
@@ -27,7 +27,7 @@
             <input  formControlName="cpf"  matInput  type="text"  mask="000.000.000-00" >
             <mat-error *ngIf="cadastroForm.controls['cpf'].errors?.['required'] && cadastroForm.controls['cpf'].touched">
                 CPF é <strong>obrigatório</strong>
-            </mat-error>            
+            </mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline" class="form-field-full">
             <mat-label>Data nascimento</mat-label>
@@ -42,9 +42,9 @@
               <mat-option>--</mat-option>
               <mat-option *ngFor="let tipo of tipos" [value]="tipo">
                 {{TipoPerfilMapping[tipo]}}
-              </mat-option>             
+              </mat-option>
             </mat-select>
-            <mat-error *ngIf="tipoControl.hasError('required')">Tipo é   <strong>obrigatório</strong></mat-error>          
+            <mat-error *ngIf="tipoControl.hasError('required')">Tipo é   <strong>obrigatório</strong></mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline" class="form-field-full">
             <mat-label>Senha</mat-label>
@@ -52,14 +52,20 @@
              <mat-error  *ngIf="cadastroForm.controls['password'].errors?.['required'] && cadastroForm.controls['password'].touched">Senha é
               <strong>obrigatória</strong>
             </mat-error>
+            <mat-error  *ngIf="cadastroForm.controls['password'].errors?.['minlength'] && cadastroForm.controls['password'].touched">Senha
+              <strong>menor que 6 caracteres</strong>
+            </mat-error>
+            <mat-error  *ngIf="cadastroForm.controls['password'].errors?.['maxlength']">Senha
+              <strong>maior que 40 caracteres</strong>
+            </mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline" class="form-field-full">
             <mat-label>Repita a senha</mat-label>
-            <input matInput type="password" [formControl]="confirmeSenhaControl">
-            <mat-error  *ngIf="confirmeSenhaControl.hasError('required')">Senha é
+            <input matInput type="password" formControlName="confirmPassword">
+            <mat-error  *ngIf="cadastroForm.controls['confirmPassword'].errors?.['required'] && cadastroForm.controls['confirmPassword'].touched">Senha é
               <strong>obrigatória</strong>
             </mat-error>
-            <mat-error  *ngIf="senhasNaoConferem ">Senhas 
+            <mat-error  *ngIf="cadastroForm.controls['confirmPassword'].errors?.['matching']">Senhas
               <strong>não são iguais</strong>
             </mat-error>
           </mat-form-field>

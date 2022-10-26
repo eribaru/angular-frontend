@@ -4,7 +4,7 @@ export enum TipoPerfilEnum {
 }
 
 export const TipoPerfilMapping: Record<TipoPerfilEnum, string> = {
-    [TipoPerfilEnum.CANDIDATO]: "Candidato",
-    [TipoPerfilEnum.RECRUTADOR]: "Recrutador",
+    [TipoPerfilEnum.CANDIDATO]: "candidato",
+    [TipoPerfilEnum.RECRUTADOR]: "recrutador",
 
 };

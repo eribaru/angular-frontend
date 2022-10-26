@@ -41,9 +41,9 @@ export class EmpresaAdicionarComponent implements OnInit {
     private location: Location,
     private apiService: ApiService,
     private snackBar: MatSnackBar
-    
+
   ) {
-   
+
   }
 
   ngOnInit(): void {
@@ -59,7 +59,7 @@ export class EmpresaAdicionarComponent implements OnInit {
       distinctUntilChanged(),
       switchMap(val => {
         return this.filter(val || '')
-      })       
+      })
     );*/
   }
 
@@ -67,10 +67,10 @@ export class EmpresaAdicionarComponent implements OnInit {
     this.location.back();
   }
 
-  salvar(): void { 
+  salvar(): void {
     console.log(this.empresaForm.value);
     this.saveCompanyDataToApi();
-    
+
   }
 
   public saveCompanyDataToApi = () => {
@@ -85,11 +85,9 @@ export class EmpresaAdicionarComponent implements OnInit {
       },
       error: (error) => {
         console.error('There was an error!', error);
-        if(error.status==400 && error.error['cnpj'] && error.error['cnpj'] [0]=="empresa with this cnpj already exists."){
-          throw 'CNPJ já cadastrado';
-        }else{
+
           throw error;
-        }
+
       },
     });
   };
@@ -109,7 +107,7 @@ export class EmpresaAdicionarComponent implements OnInit {
     // call the service which makes the http-request
     this.apiService.getData('cidades?cod_estado=MG&search='+this.cidadesControl.value)
      .pipe(
-       map(response => response.filter(option => { 
+       map(response => response.filter(option => {
          return option.name.toLowerCase().indexOf(val.toLowerCase()) === 0
        }))
      )

@@ -27,12 +27,30 @@ export class GlobalErrorHandler implements ErrorHandler {
             stackTrace = errorService.getServerStack(error);
             if(error.status==0){
                 notifier.showError('Servidor indisponível');
-            }else{
-                if(error.status==400){
-                    notifier.showError(error.error.non_field_errors);   
-                }else{
-            notifier.showError(message);
-        }
+            }else {
+              if (error.status == 400) {
+                if (error.error['cnpj']) {
+                  if (error.error['cnpj'].includes("empresa with this cnpj already exists.")) {
+                    notifier.showError('CNPJ já cadastrado');
+                  }
+                } else {
+                  if (error.error['email']) {
+                    if (error.error['email'].includes("usuario with this email already exists.")) {
+                      notifier.showError('Usuário já cadastrado');
+                    }
+                  } else {
+                    if (error.error['cpf']) {
+                      if (error.error['cpf'].includes("usuario with this cpf already exists.")) {
+                        notifier.showError('Usuário já cadastrado');
+                      }
+                    } else {
+                      notifier.showError(error.error.non_field_errors);
+                    }
+                  }
+                }
+              } else {
+                notifier.showError(message);
+              }
             }
         } else {
             // Client Error
@@ -40,7 +58,6 @@ export class GlobalErrorHandler implements ErrorHandler {
             stackTrace = errorService.getClientStack(error);
             notifier.showError(message);
         }
-
         // Always log errors
         logger.logError(message, stackTrace);
 
