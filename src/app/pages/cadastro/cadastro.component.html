@@ -76,9 +76,16 @@
         </mat-card-content>
 
       </form>
-
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <button mat-button color="primary"  align="start" (click)="voltar()">Voltar</button>
+        </div>
+        <div class="col-sm-6" >
+          <button mat-raised-button color="primary"  align="end" (click)="cadastrar()">Cadastrar</button>
+        </div>
+      </div>
       <mat-card-actions align="end">
-        <button mat-raised-button color="primary"  align="end" (click)="cadastrar()">Cadastrar</button>
+
       </mat-card-actions>
 
     </mat-card>

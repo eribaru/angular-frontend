@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 import { ICidade } from '../../../interfaces/ICidade';
 import { Router } from '@angular/router';
-import { debounceTime, distinctUntilChanged, Observable, of, startWith, switchMap } from 'rxjs';
+import { Observable, of, startWith, switchMap } from 'rxjs';
 import {FormControl} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from '../../../services/notification.service';

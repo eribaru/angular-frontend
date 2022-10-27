@@ -6,6 +6,8 @@ import {TipoPerfilEnum, TipoPerfilMapping} from "../../interfaces/TipoPerfil.enu
 import Validation from "../../utils/Validation";
 import { UsuarioService } from '../../services/usuario.service';
 import {FormControl} from '@angular/forms';
+import {HttpErrorResponse} from "@angular/common/http";
+import {Router} from "@angular/router";
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
@@ -20,6 +22,7 @@ export class CadastroComponent implements OnInit {
   public tipos = Object.values(TipoPerfilEnum);
 
   constructor(
+    private _router: Router,
     private formBuilder: FormBuilder,
     private usuarioService: UsuarioService,
     private snackBar: MatSnackBar
@@ -41,7 +44,11 @@ export class CadastroComponent implements OnInit {
       validators: [Validation.match('password', 'confirmPassword'),Validation.cpf('cpf')]
     });
   }
-
+  voltar() {
+    this._router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this._router.onSameUrlNavigation = 'reload';
+    this._router.navigate(['']);
+  }
 
 
   cadastrar() {
@@ -62,6 +69,9 @@ export class CadastroComponent implements OnInit {
       return;
     }
 
+
+
+
     const usuario = this.cadastroForm.getRawValue() as IUsuario;
     usuario.email = usuario.username;
     const tipoSelecionado = this.tipoControl.value as TipoPerfilEnum;
@@ -69,7 +79,18 @@ export class CadastroComponent implements OnInit {
     usuario.tipo  = TipoPerfilMapping[tipoSelecionado];
     try {
       this.usuarioService.cadastrar(usuario).subscribe((response) => {
-        if (!response.token) {
+
+        if ((response  as   IUsuario).id ) {
+
+          this.snackBar.open(
+            'Sucesso',
+            'Usuário cadastrado com sucesso.',
+            {
+              duration: 3000,
+            }
+          );
+          this.voltar();
+        }else{
           this.snackBar.open(
             'Falha no cadastro',
             'Verifique os campos e tente novamente.',
