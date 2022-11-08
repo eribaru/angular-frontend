@@ -6,11 +6,8 @@ import { ICidade } from '../../../interfaces/ICidade';
 import { Router } from '@angular/router';
 import {FormControl} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {MatSelect} from "@angular/material/select";
 import { EstadosEnum,EstadosMapping} from 'src/app/interfaces/Estados.enum';
-import {TipoPerfilEnum} from "../../../interfaces/TipoPerfil.enum";
-import {IEmpresa} from "../../../interfaces/IEmpresa";
-import {map, Observable, startWith} from "rxjs";
+import {debounceTime, distinctUntilChanged, map, Observable, startWith} from "rxjs";
 export interface State {
   flag: string;
   name: string;
@@ -26,21 +23,18 @@ export interface State {
 
 
 export class EmpresaAdicionarComponent implements OnInit {
-  cnpjmask = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
   empresaForm: FormGroup = new FormGroup({});
   estadosControl = new FormControl<EstadosEnum | null>(null, Validators.required);
   cidadesControl = new FormControl('', Validators.required);
+  statesControl = new FormControl('', Validators.required);
   public EstadosMapping = EstadosMapping;
   public estados = Object.values(EstadosEnum);
   estadoSelecionado = EstadosEnum;
-  enumKeys=Object.keys(EstadosEnum);
-  ufs = Object.keys;
 
   /** list of cidades */
-  //cidades: []  ;
-  //cidadesCarregadas:Observable<any>;
+  cidades: ICidade[] = [];
+  cidadesCarregadas:Observable<ICidade[]>;
   options = [];
-  //filteredOptions: Observable<any>;
   filteredStates: Observable<State[]>;
 
   states: State[] = [
@@ -80,45 +74,28 @@ export class EmpresaAdicionarComponent implements OnInit {
     private snackBar: MatSnackBar
 
   ) {
-   // this.filteredOptions = this.cidadesControl.valueChanges.pipe(
-    //  startWith(''),
-    //  debounceTime(400),
-    //  distinctUntilChanged(),
-    //  switchMap(val => {
-    //    return this.filter(val || '')
-    //  })
-    //)
-    //this.cidadesCarregadas = this.cidadesControl.valueChanges.pipe(
-     // startWith(''),
-      //debounceTime(400),
-      //distinctUntilChanged(),
-     // map(state => {
-      //  return (state ? this.filter(state) : this.cidades.slice());
-     // }),
-   // );*/
-   this.enumKeys=Object.keys(this.estadoSelecionado);
+      this.cidadesCarregadas = this.cidadesControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(400),
+      distinctUntilChanged(),
+     map(cidade => {
+        return (cidade ? this.filter(cidade) : this.cidades.slice());
+      }),
+    );
 
-    this.filteredStates = this.cidadesControl.valueChanges.pipe(
+    this.filteredStates = this.statesControl.valueChanges.pipe(
       startWith(''),
       map((state) => (state ? this._filterStates(state) : this.states.slice())),
     );
+  }
 
-
-
-      //switchMap(val => {
-      //  if(val !=null && val.length>3){
-      //    return this.filter(val || '')
-      //  }else{
-     ''//     return [];
-      //  }
-
-      //})
-    //)
+  private filter(value: string): ICidade[] {
+    const filterValue = value.toLowerCase();
+    return this.cidades.filter(cidade => cidade.nom_cidade.toLowerCase().includes(filterValue));
   }
 
   private _filterStates(value: string): State[] {
     const filterValue = value.toLowerCase();
-
     return this.states.filter(state => state.name.toLowerCase().includes(filterValue));
   }
 
