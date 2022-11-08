@@ -89,7 +89,7 @@ export class CadastroComponent implements OnInit {
               duration: 3000,
             }
           );
-          this.voltar();
+          this.voltar()
         }else{
           this.snackBar.open(
             'Falha no cadastro',
