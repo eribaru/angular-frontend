@@ -8,11 +8,7 @@ import {FormControl} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EstadosEnum,EstadosMapping} from 'src/app/interfaces/Estados.enum';
 import {debounceTime, distinctUntilChanged, map, Observable, startWith} from "rxjs";
-export interface State {
-  flag: string;
-  name: string;
-  population: string;
-}
+import {IEmpresa} from "../../../interfaces/IEmpresa";
 
 @Component({
   selector: 'app-empresa-adicionar',
@@ -25,45 +21,16 @@ export interface State {
 export class EmpresaAdicionarComponent implements OnInit {
   empresaForm: FormGroup = new FormGroup({});
   estadosControl = new FormControl<EstadosEnum | null>(null, Validators.required);
-  cidadesControl = new FormControl('', Validators.required);
+  cidadesControl = new FormControl(null, Validators.required);
   statesControl = new FormControl('', Validators.required);
   public EstadosMapping = EstadosMapping;
-  public estados = Object.values(EstadosEnum);
+  public estados : EstadosEnum[]= Object.values(EstadosEnum);
   estadoSelecionado = EstadosEnum;
 
   /** list of cidades */
   cidades: ICidade[] = [];
   cidadesCarregadas:Observable<ICidade[]>;
   options = [];
-  filteredStates: Observable<State[]>;
-
-  states: State[] = [
-    {
-      name: 'Arkansas',
-      population: '2.978M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Arkansas.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/9/9d/Flag_of_Arkansas.svg',
-    },
-    {
-      name: 'California',
-      population: '39.14M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_California.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg',
-    },
-    {
-      name: 'Florida',
-      population: '20.27M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Florida.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Florida.svg',
-    },
-    {
-      name: 'Texas',
-      population: '27.47M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Texas.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Texas.svg',
-    },
-  ];
-
 
 
   constructor(
@@ -78,25 +45,20 @@ export class EmpresaAdicionarComponent implements OnInit {
       startWith(''),
       debounceTime(400),
       distinctUntilChanged(),
-     map(cidade => {
+     map(cidade  => {
         return (cidade ? this.filter(cidade) : this.cidades.slice());
       }),
     );
 
-    this.filteredStates = this.statesControl.valueChanges.pipe(
-      startWith(''),
-      map((state) => (state ? this._filterStates(state) : this.states.slice())),
-    );
+
   }
 
   private filter(value: string): ICidade[] {
+    if(value.length>=3){
+      this.getAllCidades();
+    }
     const filterValue = value.toLowerCase();
     return this.cidades.filter(cidade => cidade.nom_cidade.toLowerCase().includes(filterValue));
-  }
-
-  private _filterStates(value: string): State[] {
-    const filterValue = value.toLowerCase();
-    return this.states.filter(state => state.name.toLowerCase().includes(filterValue));
   }
 
   ngOnInit(): void {
@@ -120,7 +82,11 @@ export class EmpresaAdicionarComponent implements OnInit {
   }
 
   public saveCompanyDataToApi = () => {
-    this.apiService.postData('empresas', this.empresaForm.value).subscribe({
+
+    const empresa = this.empresaForm.getRawValue() as IEmpresa;
+    const cidadeSelecionado = this.cidadesControl.value ;
+    empresa.sede
+    this.apiService.postData('empresas', empresa).subscribe({
       next: (data) => {
         this.snackBar.open('Sucesso', 'Item foi Salvo', {
           duration: 3000,
@@ -139,39 +105,15 @@ export class EmpresaAdicionarComponent implements OnInit {
   };
 
   // filter and return the values
- // public getAllCidades = () => {
-  //  this.apiService.getData('cidades?cod_estado=' +  estado+ '&search=' + this.cidadesControl.value).subscribe((res) => {
- //     this.cidades = res as ICidade[];
-  //  });
- // };
-  //filter(val: string): Observable<any> {
-
-  //  this.apiService.getData('cidades?cod_estado=' +  estado+ '&search=' + this.cidadesControl.value)
-   //   .pipe(
-  //      map(response => response.filter(option => {
-   //       return option..toLowerCase().indexOf(val.toLowerCase()) === 0
-   //     }))
-   //   )
- // }
-
-  //__filter(val: string): ICidade[] {
-    // call the service which makes the http-request
-
-    //const estadoSelecionado = this.estadosControl.value as EstadosEnum;
-    //const estado  = EstadosMapping[estadoSelecionado];
-    /*
-    response = this.apiService.getData('cidades?cod_estado=' +  estado+ '&search=' + this.cidadesControl.value)
-      .pipe(
-        map(response => response.filter(cidade => {
-         // return cidade.toLowerCase().indexOf(val.toLowerCase()) === 0;
-        }))
-      );*/
-    //return this.cidades?.filter(option => option.toLowerCase().includes(val));
-   //}
-
-
-
-
+ public getAllCidades = () => {
+   const estadoSelecionado : EstadosEnum = this.estadosControl.value as EstadosEnum;
+   const estado = Object.keys(EstadosEnum)[Object.values(EstadosEnum).indexOf(estadoSelecionado)];
+   if(estado){
+   this.apiService.getData('cidades?cod_estado=' +  estado + '&search=' + this.cidadesControl.value).subscribe((res) => {
+      this.cidades = res as ICidade[];
+    });
+  };
+ }
 
 }
 

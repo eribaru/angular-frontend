@@ -46,22 +46,7 @@
             </mat-select>
             <mat-error *ngIf="estadosControl.hasError('required')">Estado é   <strong>obrigatório</strong></mat-error>
           </mat-form-field>
-
-          <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>State</mat-label>
-            <input matInput
-                   aria-label="State"
-                   [matAutocomplete]="auto"
-                   [formControl]="statesControl">
-            <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
-                <img alt="" class="example-option-img" [src]="state.flag" height="25">
-                <span>{{state.name}}</span> |
-                <small>Population: {{state.population}}</small>
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-          <mat-form-field>
+          <mat-form-field >
            <input
              type="text"
              placeholder="Cidade"
