@@ -21,7 +21,7 @@ import {IEmpresa} from "../../../interfaces/IEmpresa";
 export class EmpresaAdicionarComponent implements OnInit {
   empresaForm: FormGroup = new FormGroup({});
   estadosControl = new FormControl<EstadosEnum | null>(null, Validators.required);
-  cidadesControl = new FormControl(null, Validators.required);
+  cidadesControl = new FormControl<string | ICidade>('', Validators.required);
   statesControl = new FormControl('', Validators.required);
   public EstadosMapping = EstadosMapping;
   public estados : EstadosEnum[]= Object.values(EstadosEnum);
@@ -46,11 +46,16 @@ export class EmpresaAdicionarComponent implements OnInit {
       debounceTime(400),
       distinctUntilChanged(),
      map(cidade  => {
-        return (cidade ? this.filter(cidade) : this.cidades.slice());
+       const name = typeof cidade === 'string' ? cidade : cidade?.nom_cidade;
+        return (name ? this.filter(name) : this.cidades.slice());
       }),
     );
 
 
+  }
+
+  displayFn(cidade: ICidade): string {
+    return cidade && cidade.nom_cidade ? cidade.nom_cidade : '';
   }
 
   private filter(value: string): ICidade[] {
@@ -84,8 +89,8 @@ export class EmpresaAdicionarComponent implements OnInit {
   public saveCompanyDataToApi = () => {
 
     const empresa = this.empresaForm.getRawValue() as IEmpresa;
-    const cidadeSelecionado = this.cidadesControl.value ;
-    empresa.sede
+    const cidadeSelecionado : ICidade = this.cidadesControl.value as ICidade ;
+    empresa.sede = cidadeSelecionado.cod_cidade;
     this.apiService.postData('empresas', empresa).subscribe({
       next: (data) => {
         this.snackBar.open('Sucesso', 'Item foi Salvo', {

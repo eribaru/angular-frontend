@@ -53,10 +53,10 @@
              [formControl]="cidadesControl"
              matInput
              [matAutocomplete]="auto">
-           <mat-autocomplete #auto="matAutocomplete">
+           <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
              <mat-option
                *ngFor="let cidade of cidadesCarregadas | async"
-               [value]="cidade.nom_cidade">
+               [value]="cidade">
                {{cidade.nom_cidade}}
              </mat-option>
            </mat-autocomplete>
