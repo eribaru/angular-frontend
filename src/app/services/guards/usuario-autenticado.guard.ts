@@ -14,7 +14,7 @@ export class UsuarioAutenticadoGuard implements CanActivate{
     if (this.usuarioService.logado) {
       return true;
     }
-    this.router.navigate(['login']);
+    this.router.navigate(['login']).then();
     return false;
   }
 }

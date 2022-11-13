@@ -1,14 +1,14 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Location } from '@angular/common';
-import {FormBuilder, FormGroup, UntypedFormControl, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 import { ICidade } from '../../../interfaces/ICidade';
 import { Router } from '@angular/router';
-import {FormControl} from '@angular/forms';
+import { FormControl} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EstadosEnum,EstadosMapping} from 'src/app/interfaces/Estados.enum';
-import {debounceTime, distinctUntilChanged, map, Observable, startWith} from "rxjs";
-import {IEmpresa} from "../../../interfaces/IEmpresa";
+import { debounceTime, distinctUntilChanged, map, Observable, startWith} from "rxjs";
+import { IEmpresa} from "../../../interfaces/IEmpresa";
 
 @Component({
   selector: 'app-empresa-adicionar',
@@ -92,13 +92,13 @@ export class EmpresaAdicionarComponent implements OnInit {
     const cidadeSelecionado : ICidade = this.cidadesControl.value as ICidade ;
     empresa.sede = cidadeSelecionado.cod_cidade;
     this.apiService.postData('empresas', empresa).subscribe({
-      next: (data) => {
+      next: () => {
         this.snackBar.open('Sucesso', 'Item foi Salvo', {
           duration: 3000,
         });
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(['empresa-lista']);
+        this.router.navigate(['empresa-lista']).then().then();
       },
       error: (error) => {
         console.error('There was an error!', error);
@@ -117,7 +117,7 @@ export class EmpresaAdicionarComponent implements OnInit {
    this.apiService.getData('cidades?cod_estado=' +  estado + '&search=' + this.cidadesControl.value).subscribe((res) => {
       this.cidades = res as ICidade[];
     });
-  };
+  }
  }
 
 }

@@ -24,7 +24,8 @@ mat-sidenav {
 }
 .mat-drawer {
     background-color: hsl(217, 15%, 78%);
-    color:#fff
+    color:#fff;
+  height: 100%;
 }
 .mat-list {
     background-color: #c0c6d0;
@@ -63,3 +64,4 @@ th.mat-header-cell {
     text-align: left;
     max-width: 300px;
 }
+

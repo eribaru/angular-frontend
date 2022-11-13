@@ -47,7 +47,7 @@ export class UsuarioService {
   }
 
   get logado(): boolean {
-    return localStorage.getItem('token') ? true : false;
+    return !!localStorage.getItem('token');
   }
 
   salvaUsuarioLogadoNoLocalStorage(usuario: IUsuario) {
@@ -71,7 +71,7 @@ export class UsuarioService {
           window.btoa(JSON.stringify(resposta.user))
         );
 
-        this.router.navigate(['']);
+        this.router.navigate(['']).then();
       }),
       catchError((error) => {
         console.log('Erro ao logar', typeof error);
@@ -82,16 +82,16 @@ export class UsuarioService {
 
   cadastrar(usuario: IUsuario): Observable<any> {
     return this.httpClient.post<ILogin>(apiUrlUsuario + 'api/v1/contas/registrar/', usuario).pipe(
-      tap((resposta) => {
-        
-        //this.router.navigate(['']);
+      tap(() => {
+
+        //this.router.navigate(['']).then();
       })
     );
   }
 
   deslogar() {
     localStorage.clear();
-    this.router.navigate(['login']);
+    this.router.navigate(['login']).then();
   }
 
   logError(message: string, stack: string) {

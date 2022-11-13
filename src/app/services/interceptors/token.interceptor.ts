@@ -38,11 +38,11 @@ export class TokenInterceptor implements HttpInterceptor {
         retry(1),
         catchError((error: HttpErrorResponse) => {
           if (error.status === 403) {
-            this._router.navigate(['/login']);
+            this._router.navigate(['/login']).then();
             // refresh token
-            return throwError(error);
+            return throwError(() => error);
           } else {
-            return throwError(error);
+            return throwError(() => error);
           }
         })
       );

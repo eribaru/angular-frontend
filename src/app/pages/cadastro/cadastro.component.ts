@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IUsuario } from '../../interfaces/IUsuario';
 import {TipoPerfilEnum, TipoPerfilMapping} from "../../interfaces/TipoPerfil.enum";
-import Validation from "../../utils/Validation";
+
 import { UsuarioService } from '../../services/usuario.service';
 import {FormControl} from '@angular/forms';
-import {HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
+import Validation from "../../utils/validation";
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
@@ -47,7 +47,7 @@ export class CadastroComponent implements OnInit {
   voltar() {
     this._router.routeReuseStrategy.shouldReuseRoute = () => false;
     this._router.onSameUrlNavigation = 'reload';
-    this._router.navigate(['']);
+    this._router.navigate(['']).then();
   }
 
 

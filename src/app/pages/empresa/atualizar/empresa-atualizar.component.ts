@@ -34,13 +34,13 @@ export class EmpresaAtualizarComponent implements OnInit {
   ]);
 
   constructor(
-    
+
     private router: Router,
     private formBuilder: FormBuilder,
     private location: Location,
     private apiService: ApiService,
     private snackBar: MatSnackBar
-    
+
   ) {
     const navigation = this.router.getCurrentNavigation();
     if(navigation!=null){
@@ -62,14 +62,14 @@ export class EmpresaAtualizarComponent implements OnInit {
     this.empresaForm.controls["nome"].setValue(this.empresa.nome);
     this.empresaForm.controls["ramo"].setValue(this.empresa.ramo);
     this.empresaForm.controls["sede"].setValue(this.empresa.sede);
-   
+
    /* this.cidadesCarregadas= this.cidadesControl.valueChanges.pipe(
       startWith(''),
       debounceTime(400),
       distinctUntilChanged(),
       switchMap(val => {
         return this.filter(val || '')
-      })       
+      })
     );*/
   }
 
@@ -77,10 +77,10 @@ export class EmpresaAtualizarComponent implements OnInit {
     this.location.back();
   }
 
-  salvar(): void { 
+  salvar(): void {
     console.log(this.empresaForm.value);
     this.updateCompanyDataToApi();
-   
+
   }
 
   public updateCompanyDataToApi = () => {
@@ -91,7 +91,7 @@ export class EmpresaAtualizarComponent implements OnInit {
         });
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(['empresa-lista']);
+        this.router.navigate(['empresa-lista']).then();
       },
       error: (error) => {
         console.error('There was an error!', error);
@@ -114,7 +114,7 @@ export class EmpresaAtualizarComponent implements OnInit {
     // call the service which makes the http-request
     this.apiService.getData('cidades?cod_estado=MG&search='+this.cidadesControl.value)
      .pipe(
-       map(response => response.filter(option => { 
+       map(response => response.filter(option => {
          return option.name.toLowerCase().indexOf(val.toLowerCase()) === 0
        }))
      )

@@ -18,14 +18,12 @@ th.mat-header-cell {
     z-index: 100;
     display: flex;
     flex-direction: column-reverse;
-    align-items: right;
-  
+
     > div {
       display: flex;
       flex-direction: column-reverse;
-      align-items: right;
       margin-bottom: 5px;
-  
+
       button {
         margin-bottom: 17px;
       }

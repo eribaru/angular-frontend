@@ -42,9 +42,11 @@ export class EmpresaListaComponent implements OnInit {
     return this._router.navigate(['empresa-adicionar/']);
   };
 
+  /*
   public redirectToDetails = (id: string) => {
     return this._router.navigate(['empresa-detalhe/' + id,{}]);
-  };
+  };*/
+
   public redirectToUpdate = (empresa: any) => {
     //dataSource.
     return this._router.navigate(['empresa-atualizar/' + empresa.id],{ state: { example: empresa} } );
@@ -61,13 +63,13 @@ export class EmpresaListaComponent implements OnInit {
   voltar(): void {
     this._router.routeReuseStrategy.shouldReuseRoute = () => false;
     this._router.onSameUrlNavigation = 'reload';
-    this._router.navigate(['']);
+    this._router.navigate(['']).then();
   }
 
   reloadComponent() {
     this._router.routeReuseStrategy.shouldReuseRoute = () => false;
     this._router.onSameUrlNavigation = 'reload';
-    this._router.navigate(['empresa-lista']);
+    this._router.navigate(['empresa-lista']).then();
   }
 
 }
