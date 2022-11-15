@@ -29,25 +29,26 @@ export class GlobalErrorHandler implements ErrorHandler {
                 notifier.showError('Servidor indisponível');
             }else {
               if (error.status == 400) {
+                message = "";
                 if (error.error['cnpj']) {
                   if (error.error['cnpj'].includes("empresa with this cnpj already exists.")) {
-                    notifier.showError('CNPJ já cadastrado');
-                  }
-                } else {
-                  if (error.error['email']) {
-                    if (error.error['email'].includes("usuario with this email already exists.")) {
-                      notifier.showError('Usuário já cadastrado');
-                    }
-                  } else {
-                    if (error.error['cpf']) {
-                      if (error.error['cpf'].includes("usuario with this cpf already exists.")) {
-                        notifier.showError('Usuário já cadastrado');
-                      }
-                    } else {
-                      notifier.showError(error.error.non_field_errors);
-                    }
+                    message += 'CNPJ já cadastrado';
                   }
                 }
+                if (error.error['email']) {
+                  if (error.error['email'].includes("usuario with this email already exists.")) {
+                    message += ('Usuário já cadastrado');
+                  }
+                }
+                if (error.error['cpf']) {
+                  if (error.error['cpf'].includes("usuario with this cpf already exists.")) {
+                    notifier.showError('Usuário já cadastrado');
+                  }
+                } else {
+                  console.log(error.error);
+                  //notifier.showError(error.error);
+                }
+                notifier.showError(message);
               } else {
                 notifier.showError(message);
               }

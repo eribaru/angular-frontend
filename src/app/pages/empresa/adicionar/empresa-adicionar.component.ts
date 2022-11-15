@@ -22,7 +22,6 @@ export class EmpresaAdicionarComponent implements OnInit {
   empresaForm: FormGroup = new FormGroup({});
   estadosControl = new FormControl<EstadosEnum | null>(null, Validators.required);
   cidadesControl = new FormControl<string | ICidade>('', Validators.required);
-  statesControl = new FormControl('', Validators.required);
   public EstadosMapping = EstadosMapping;
   public estados : EstadosEnum[]= Object.values(EstadosEnum);
   estadoSelecionado = EstadosEnum;
@@ -30,7 +29,6 @@ export class EmpresaAdicionarComponent implements OnInit {
   /** list of cidades */
   cidades: ICidade[] = [];
   cidadesCarregadas:Observable<ICidade[]>;
-  options = [];
 
 
   constructor(

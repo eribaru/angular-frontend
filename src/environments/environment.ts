@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl:'https://eribaru.pythonanywhere.com/'
+  apiUrl:'http://localhost:8000/'
 };
 
 /*

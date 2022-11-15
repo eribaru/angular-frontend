@@ -50,6 +50,10 @@ import { EmpresaListaComponent } from './pages/empresa/lista/empresa-lista.compo
 import { EmpresaDetalheComponent } from './pages/empresa/detalhe/empresa-detalhe.component';
 import { EmpresaAtualizarComponent } from './pages/empresa/atualizar/empresa-atualizar.component';
 import { EmpresaAdicionarComponent } from './pages/empresa/adicionar/empresa-adicionar.component';
+import { VagaListaComponent } from './pages/vaga/lista/vaga-lista.component';
+import { VagaDetalheComponent } from './pages/vaga/detalhe/vaga-detalhe.component';
+import { VagaAtualizarComponent } from './pages/vaga/atualizar/vaga-atualizar.component';
+import { VagaAdicionarComponent } from './pages/vaga/adicionar/vaga-adicionar.component';
 import { NgxMaskModule } from 'ngx-mask';
 @NgModule({
   declarations: [
@@ -61,6 +65,10 @@ import { NgxMaskModule } from 'ngx-mask';
     EmpresaListaComponent,
     EmpresaAdicionarComponent,
     EmpresaAtualizarComponent,
+    VagaDetalheComponent,
+    VagaListaComponent,
+    VagaAdicionarComponent,
+    VagaAtualizarComponent,
     PrincipalComponent
     
   ],
