@@ -12,7 +12,6 @@ import {IVaga} from "../../../interfaces/IVaga";
 import {EstadosEnum, EstadosMapping} from "../../../interfaces/Estados.enum";
 import {TipoContratoEnum,TipoContratoMapping} from "../../../interfaces/TipoContrato.enum";
 import {TipoRegimeEnum,TipoRegimeMapping} from "../../../interfaces/TipoRegime.enum";
-import {TipoPerfilEnum} from "../../../interfaces/TipoPerfil.enum";
 
 @Component({
   selector: 'app-vaga-adicionar',
@@ -33,11 +32,7 @@ export class VagaAdicionarComponent implements OnInit {
 
   public tiposRegime:TipoRegimeEnum[] = Object.values(TipoRegimeEnum);
   public tiposContrato:TipoContratoEnum[]  = Object.values(TipoContratoEnum);
-  estadosControl = new FormControl<EstadosEnum | null>(null, Validators.required);
-  cidadesControl = new FormControl<string | ICidade>('', Validators.required);
-  public EstadosMapping = EstadosMapping;
-  public estados : EstadosEnum[]= Object.values(EstadosEnum);
-  estadoSelecionado = EstadosEnum;
+
 
   /** list of empresas */
   empresas: IEmpresa[] = [];
@@ -66,10 +61,6 @@ export class VagaAdicionarComponent implements OnInit {
     );
 
 
-  }
-
-  displayFnCidade(cidade: ICidade): string {
-    return cidade && cidade.nom_cidade ? cidade.nom_cidade : '';
   }
 
   displayFnEmpresa(empresa: IEmpresa): string {
@@ -119,18 +110,16 @@ export class VagaAdicionarComponent implements OnInit {
     const vaga = this.vagaForm.getRawValue() as IVaga;
     const empresaSelecionada : IEmpresa = this.empresasControl.value as IEmpresa ;
     vaga.empresa = empresaSelecionada.id;
-    const tipoRegimeSelecionado = this.tipoRegimeControl.value as TipoRegimeEnum;
-    const tipoContratoSelecionado = this.tipoContratoControl.value as TipoContratoEnum;
-    vaga.tipo_contrato = tipoContratoSelecionado;
-    vaga.contratacao = tipoRegimeSelecionado;
+    vaga.tipo_contrato = this.tipoContratoControl.value as TipoContratoEnum;
+    vaga.contratacao = this.tipoRegimeControl.value as TipoRegimeEnum;
     this.apiService.postData('vagas', vaga).subscribe({
       next: () => {
-        this.snackBar.open('Sucesso', 'Item foi Salvo', {
+        this.snackBar.open('Sucesso', 'Vaga foi salva', {
           duration: 3000,
         });
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(['empresa-lista']).then().then();
+        this.router.navigate(['vaga-lista']).then().then();
       },
       error: (error) => {
         console.error('There was an error!', error);

@@ -50,7 +50,7 @@ export class VagaListaComponent implements OnInit {
 
 
   public redirectToDetails = (element: IVaga) => {
-    return this._router.navigate(['vaga-detalhe/' + element.id,{ state: { example: element} }]);
+    return this._router.navigate(['vaga-detalhe/' + element.id],{ state: { example: element} });
   };
 
 
