@@ -102,8 +102,8 @@ export class VagaAtualizarComponent implements OnInit {
     this.vagaForm.controls["local"].setValue(this.vaga.local);
     this.vagaForm.controls["data_cadastro"].setValue(this.vaga.data_cadastro);
     this.vagaForm.controls["data_fechamento"].setValue(this.vaga.data_fechamento);
-    //this.tipoContratoControl.setValue(TipoContratoEnum[this.vaga.tipo_contrato]);
-    //this.tipoRegimeControl.setValue(TipoRegimeEnum[this.vaga.contratacao]);
+    this.tipoContratoControl.setValue(this.vaga.tipo_contrato as TipoContratoEnum);
+    this.tipoRegimeControl.setValue(this.vaga.contratacao as TipoRegimeEnum);
   }
   displayFnEmpresa(empresa: IEmpresa): string {
     return empresa && empresa.nome ? empresa.nome : '';
