@@ -1,16 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ApiService } from '../../../services/api.service';
-import { ICidade } from '../../../interfaces/ICidade';
-import {debounceTime, distinctUntilChanged, map, Observable, of, startWith, switchMap} from 'rxjs';
-import {FormControl} from '@angular/forms';
-import { Router } from '@angular/router';
-import { IVaga } from 'src/app/interfaces/IVaga';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {Component, OnInit} from '@angular/core';
+import {Location} from '@angular/common';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ApiService} from '../../../services/api.service';
+import {debounceTime, distinctUntilChanged, map, Observable, startWith} from 'rxjs';
+import {Router} from '@angular/router';
+import {IVaga} from 'src/app/interfaces/IVaga';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {IEmpresa} from "../../../interfaces/IEmpresa";
-import {TipoContratoEnum,TipoContratoMapping} from "../../../interfaces/TipoContrato.enum";
-import {TipoRegimeEnum,TipoRegimeMapping} from "../../../interfaces/TipoRegime.enum";
+import {TipoContratoEnum, TipoContratoMapping} from "../../../interfaces/TipoContrato.enum";
+import {TipoRegimeEnum, TipoRegimeMapping} from "../../../interfaces/TipoRegime.enum";
+
 @Component({
   selector: 'app-vaga-atualizar',
   templateUrl: './vaga-atualizar.component.html',
@@ -92,17 +91,19 @@ export class VagaAtualizarComponent implements OnInit {
       data_cadastro: [null, Validators.required],
       data_fechamento: [null, Validators.required],
     });
+    this.recuperaEmpresa();
     this.vagaForm.controls["cargo"].setValue(this.vaga.cargo);
     this.vagaForm.controls["area"].setValue(this.vaga.area);
     this.vagaForm.controls["resposabilidades"].setValue(this.vaga.resposabilidades);
+    this.vagaForm.controls["carga_horaria"].setValue(this.vaga.carga_horaria);
     this.vagaForm.controls["requisitos"].setValue(this.vaga.requisitos);
     this.vagaForm.controls["pcsc"].setValue(this.vaga.pcsc);
     this.vagaForm.controls["remoto"].setValue(this.vaga.remoto);
     this.vagaForm.controls["local"].setValue(this.vaga.local);
     this.vagaForm.controls["data_cadastro"].setValue(this.vaga.data_cadastro);
     this.vagaForm.controls["data_fechamento"].setValue(this.vaga.data_fechamento);
-
-
+    //this.tipoContratoControl.setValue(TipoContratoEnum[this.vaga.tipo_contrato]);
+    //this.tipoRegimeControl.setValue(TipoRegimeEnum[this.vaga.contratacao]);
   }
   displayFnEmpresa(empresa: IEmpresa): string {
     return empresa && empresa.nome ? empresa.nome : '';
@@ -119,8 +120,21 @@ export class VagaAtualizarComponent implements OnInit {
 
   }
 
+  public recuperaEmpresa = () => {
+    this.apiService.getDetail('empresas/' + this.vaga.empresa).subscribe((data) => {
+      if(data)
+        this.empresasControl.setValue(data as IEmpresa);
+
+    });
+  };
+
   public updateJobDataToApi = () => {
-    this.apiService.putData('vagas/'+this.vaga.id, this.vagaForm.value).subscribe({
+    const empresaSelecionada : IEmpresa = this.empresasControl.value as IEmpresa ;
+    const vagaAtualizada = this.vagaForm.getRawValue() as IVaga;
+    vagaAtualizada.empresa = empresaSelecionada.id;
+    vagaAtualizada.tipo_contrato = this.tipoContratoControl.value as TipoContratoEnum;
+    vagaAtualizada.contratacao = this.tipoRegimeControl.value as TipoRegimeEnum;
+    this.apiService.putData('vagas/'+this.vaga.id, vagaAtualizada).subscribe({
       next: (data) => {
         this.snackBar.open('Sucesso', 'Item foi atualizado', {
           duration: 3000,

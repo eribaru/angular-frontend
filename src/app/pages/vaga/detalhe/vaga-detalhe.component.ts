@@ -6,6 +6,8 @@ import {ApiService} from "../../../services/api.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {IVaga} from "../../../interfaces/IVaga";
 import {IEmpresa} from "../../../interfaces/IEmpresa";
+import {TipoContratoEnum, TipoContratoMapping} from "../../../interfaces/TipoContrato.enum";
+import {TipoRegimeEnum, TipoRegimeMapping} from "../../../interfaces/TipoRegime.enum";
 
 @Component({
   selector: 'app-vaga-detalhe',
@@ -17,6 +19,8 @@ export class VagaDetalheComponent implements OnInit {
   public vaga!: IVaga;
   vagaForm: FormGroup = new FormGroup({});
   empresasControl = new FormControl<string | IEmpresa>('');
+  public TipoContratoMapping = TipoContratoMapping;
+  public TipoRegimeMapping = TipoRegimeMapping;
 
   constructor(private router: Router,
               private formBuilder: FormBuilder,
@@ -35,6 +39,7 @@ export class VagaDetalheComponent implements OnInit {
 
 
   ngOnInit(): void {
+
     this.vagaForm = this.formBuilder.group({
       //cargo: [null],
       area: [ null],
@@ -51,6 +56,7 @@ export class VagaDetalheComponent implements OnInit {
     });
 
       if(this.vaga!=null ){
+        this.recuperaEmpresa();
         this.vagaForm.controls["area"].disable();
         this.vagaForm.controls["area"].setValue(this.vaga.area);
         this.vagaForm.controls["resposabilidades"].disable();
@@ -66,9 +72,9 @@ export class VagaDetalheComponent implements OnInit {
         this.vagaForm.controls["carga_horaria"].disable();
         this.vagaForm.controls["carga_horaria"].setValue(this.vaga.carga_horaria);
         this.vagaForm.controls["contratacao"].disable();
-        this.vagaForm.controls["contratacao"].setValue(this.vaga.contratacao);
+        this.vagaForm.controls["contratacao"].setValue(TipoRegimeMapping[this.vaga.contratacao as TipoRegimeEnum]);
         this.vagaForm.controls["tipo_contrato"].disable();
-        this.vagaForm.controls["tipo_contrato"].setValue(this.vaga.tipo_contrato);
+        this.vagaForm.controls["tipo_contrato"].setValue(TipoContratoMapping[this.vaga.tipo_contrato as TipoContratoEnum]);
         this.vagaForm.controls["data_cadastro"].disable();
         this.vagaForm.controls["data_cadastro"].setValue(this.vaga.data_cadastro);
         this.vagaForm.controls["data_fechamento"].disable();
@@ -77,6 +83,14 @@ export class VagaDetalheComponent implements OnInit {
     }
 
   }
+
+  public recuperaEmpresa = () => {
+    this.apiService.getDetail('empresas/' + this.vaga.empresa).subscribe((data) => {
+      if(data)
+        this.empresasControl.setValue(data as IEmpresa);
+
+    });
+  };
 
   getTitulo():string {
     if(this.vaga && this.vaga.cargo) {
@@ -90,6 +104,8 @@ export class VagaDetalheComponent implements OnInit {
   voltar(): void {
     this.location.back();
   }
+
+
 
   public redirectToUpdate = () => {
     //dataSource.

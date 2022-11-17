@@ -67,6 +67,21 @@ export class ApiService {
     );
   };
 
+  public getDetail = (route: string) => {
+    const url = `${apiUrl}/${route}`;
+    return this.httpClient.get<object>(url).pipe(
+      tap((resposta) => {
+        if (!resposta) {
+          console.error(resposta);
+        }
+      }),
+      catchError((error) => {
+        console.log('Erro ao listar', typeof error);
+        throw error;
+      })
+    );
+  };
+
   public delete = (route: string) => {
     return this.httpClient.delete(apiUrl + '/' + route).pipe(
       tap((resposta) => {
