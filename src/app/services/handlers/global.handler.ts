@@ -4,13 +4,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { UsuarioService } from '../usuario.service';
 import { ErrorService } from '../error.service';
 import { NotificationService } from '../notification.service';
+import {Router} from "@angular/router";
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
 
     // Error handling is important and needs to be loaded first.
     // Because of this we should manually inject the services with Injector.
-    constructor(private injector: Injector) { }
+    constructor(private injector: Injector, private _router: Router) { }
 
     handleError(error: Error | HttpErrorResponse) {
 
@@ -50,7 +51,17 @@ export class GlobalErrorHandler implements ErrorHandler {
                 }
                 notifier.showError(message);
               } else {
-                notifier.showError(message);
+                if (error.status == 401 ){
+                  notifier.showError('Sessão expirada');
+                  //this.goToLogin();
+                }else{
+                  if (error.status == 403 ){
+                    notifier.showError('Sem autorização');
+                    //this.goToLogin();
+                  }else {
+                    notifier.showError(message);
+                  }
+                }
               }
             }
         } else {
@@ -64,4 +75,10 @@ export class GlobalErrorHandler implements ErrorHandler {
 
         console.error(error);
     }
+
+  goToLogin() {
+    this._router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this._router.onSameUrlNavigation = 'reload';
+    this._router.navigate(['/login']).then();
+  }
 }

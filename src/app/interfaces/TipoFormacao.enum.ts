@@ -1,18 +1,18 @@
 export enum TipoFormacaoEnum {
-    MEDIO = "Médio",
-    POS = "Especialização",
-    SUPERIOR = "Superior",
-    MESTRADO = "Mestrado",
-    DOUTORADO = "Doutorado"
+  medio = "Médio",
+  especializacao = "Especialização",
+  superior = "Superior",
+  mestrado = "Mestrado",
+  doutorado = "Doutorado"
 
 }
 
 export const TipoFormacaoMapping: Record<TipoFormacaoEnum, string> = {
-    [TipoFormacaoEnum.MEDIO]: "médio",
-    [TipoFormacaoEnum.POS]: "especialização",
-    [TipoFormacaoEnum.SUPERIOR]: "superior",
-    [TipoFormacaoEnum.MESTRADO]: "mestrado",
-    [TipoFormacaoEnum.DOUTORADO]: "doutorado",
+    [TipoFormacaoEnum.medio]: "Médio",
+    [TipoFormacaoEnum.especializacao]: "Especialização",
+    [TipoFormacaoEnum.superior]: "Superior",
+    [TipoFormacaoEnum.mestrado]: "Mestrado",
+    [TipoFormacaoEnum.doutorado]: "Doutorado",
 
 };
 

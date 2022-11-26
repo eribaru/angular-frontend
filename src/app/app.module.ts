@@ -1,12 +1,12 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {BrowserModule} from '@angular/platform-browser';
+import {ErrorHandler, NgModule} from '@angular/core';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { PrincipalComponent } from './pages/compartilhado/principal/principal.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import {PrincipalComponent} from './pages/compartilhado/principal/principal.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
@@ -41,20 +41,29 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
-import { TokenInterceptor } from './services/interceptors/token.interceptor';
-import { GlobalErrorHandler } from './services/handlers/global.handler';
-import { LoginComponent } from './pages/login/login.component';
-import { CadastroComponent } from './pages/cadastro/cadastro.component';
-import { HomeComponent } from './pages/home/home.component';
-import { EmpresaListaComponent } from './pages/empresa/lista/empresa-lista.component';
-import { EmpresaDetalheComponent } from './pages/empresa/detalhe/empresa-detalhe.component';
-import { EmpresaAtualizarComponent } from './pages/empresa/atualizar/empresa-atualizar.component';
-import { EmpresaAdicionarComponent } from './pages/empresa/adicionar/empresa-adicionar.component';
-import { VagaListaComponent } from './pages/vaga/lista/vaga-lista.component';
-import { VagaDetalheComponent } from './pages/vaga/detalhe/vaga-detalhe.component';
-import { VagaAtualizarComponent } from './pages/vaga/atualizar/vaga-atualizar.component';
-import { VagaAdicionarComponent } from './pages/vaga/adicionar/vaga-adicionar.component';
-import { NgxMaskModule } from 'ngx-mask';
+import {TokenInterceptor} from './services/interceptors/token.interceptor';
+import {GlobalErrorHandler} from './services/handlers/global.handler';
+import {LoginComponent} from './pages/login/login.component';
+import {CadastroComponent} from './pages/cadastro/cadastro.component';
+import {HomeComponent} from './pages/home/home.component';
+import {EmpresaListaComponent} from './pages/empresa/lista/empresa-lista.component';
+import {EmpresaDetalheComponent} from './pages/empresa/detalhe/empresa-detalhe.component';
+import {EmpresaAtualizarComponent} from './pages/empresa/atualizar/empresa-atualizar.component';
+import {EmpresaAdicionarComponent} from './pages/empresa/adicionar/empresa-adicionar.component';
+import {VagaListaComponent} from './pages/vaga/lista/vaga-lista.component';
+import {VagaDetalheComponent} from './pages/vaga/detalhe/vaga-detalhe.component';
+import {VagaAtualizarComponent} from './pages/vaga/atualizar/vaga-atualizar.component';
+import {VagaAdicionarComponent} from './pages/vaga/adicionar/vaga-adicionar.component';
+import {CurriculoListaComponent} from './pages/curriculo/lista/curriculo-lista.component';
+import {CurriculoDetalheComponent} from './pages/curriculo/detalhe/curriculo-detalhe.component';
+import {CurriculoAtualizarComponent} from './pages/curriculo/atualizar/curriculo-atualizar.component';
+import {CurriculoAdicionarComponent} from './pages/curriculo/adicionar/curriculo-adicionar.component';
+import {EnderecoListaComponent} from './pages/endereco/lista/endereco-lista.component';
+import {EnderecoDetalheComponent} from './pages/endereco/detalhe/endereco-detalhe.component';
+import {EnderecoAtualizarComponent} from './pages/endereco/atualizar/endereco-atualizar.component';
+import {EnderecoAdicionarComponent} from './pages/endereco/adicionar/endereco-adicionar.component';
+
+import {NgxMaskModule} from 'ngx-mask';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,8 +78,16 @@ import { NgxMaskModule } from 'ngx-mask';
     VagaListaComponent,
     VagaAdicionarComponent,
     VagaAtualizarComponent,
+    CurriculoDetalheComponent,
+    CurriculoListaComponent,
+    CurriculoAdicionarComponent,
+    CurriculoAtualizarComponent,
+    EnderecoDetalheComponent,
+    EnderecoListaComponent,
+    EnderecoAdicionarComponent,
+    EnderecoAtualizarComponent,
     PrincipalComponent
-    
+
   ],
   imports: [
     BrowserModule,
@@ -117,9 +134,9 @@ import { NgxMaskModule } from 'ngx-mask';
     NgxMaskModule.forRoot()
   ],
   providers: [
-    { provide: ErrorHandler, useClass: GlobalErrorHandler },
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+    {provide: ErrorHandler, useClass: GlobalErrorHandler},
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

@@ -15,6 +15,14 @@ import { VagaListaComponent } from './pages/vaga/lista/vaga-lista.component';
 import { VagaDetalheComponent } from './pages/vaga/detalhe/vaga-detalhe.component';
 import { VagaAtualizarComponent } from './pages/vaga/atualizar/vaga-atualizar.component';
 import { VagaAdicionarComponent } from './pages/vaga/adicionar/vaga-adicionar.component';
+import { CurriculoListaComponent } from './pages/curriculo/lista/curriculo-lista.component';
+import { CurriculoDetalheComponent } from './pages/curriculo/detalhe/curriculo-detalhe.component';
+import { CurriculoAtualizarComponent } from './pages/curriculo/atualizar/curriculo-atualizar.component';
+import { CurriculoAdicionarComponent } from './pages/curriculo/adicionar/curriculo-adicionar.component';
+import { EnderecoListaComponent } from './pages/endereco/lista/endereco-lista.component';
+import { EnderecoDetalheComponent } from './pages/endereco/detalhe/endereco-detalhe.component';
+import { EnderecoAtualizarComponent } from './pages/endereco/atualizar/endereco-atualizar.component';
+import { EnderecoAdicionarComponent } from './pages/endereco/adicionar/endereco-adicionar.component';
 
 const routes: Routes = [
   { path: 'cadastro', component: CadastroComponent, canActivate: [UsuarioNaoAutenticadoGuard]},
@@ -26,19 +34,25 @@ const routes: Routes = [
     ],
   },
   { path: 'empresa-lista', component: EmpresaListaComponent, canActivate: [UsuarioAutenticadoGuard],
-  children: [
-  ]
-  },
+  children: [  ]  },
   { path: 'empresa-adicionar', component: EmpresaAdicionarComponent, canActivate: [UsuarioAutenticadoGuard]},
   { path: 'empresa-atualizar/:id', component: EmpresaAtualizarComponent, canActivate: [UsuarioAutenticadoGuard]},
   { path: 'empresa-detalhe/:id', component: EmpresaDetalheComponent, canActivate: [UsuarioAutenticadoGuard]},
   { path: 'vaga-lista', component: VagaListaComponent, canActivate: [UsuarioAutenticadoGuard],
-  children: [
-  ]
-  },
+  children: [  ]  },
   { path: 'vaga-adicionar', component: VagaAdicionarComponent, canActivate: [UsuarioAutenticadoGuard]},
   { path: 'vaga-atualizar/:id', component: VagaAtualizarComponent, canActivate: [UsuarioAutenticadoGuard]},
-  { path: 'vaga-detalhe/:id', component: VagaDetalheComponent, canActivate: [UsuarioAutenticadoGuard]}
+  { path: 'vaga-detalhe/:id', component: VagaDetalheComponent, canActivate: [UsuarioAutenticadoGuard]},
+  { path: 'curriculo-lista', component: CurriculoListaComponent, canActivate: [UsuarioAutenticadoGuard],
+    children: [  ]  },
+  { path: 'curriculo-adicionar', component: CurriculoAdicionarComponent, canActivate: [UsuarioAutenticadoGuard]},
+  { path: 'curriculo-atualizar/:id', component: CurriculoAtualizarComponent, canActivate: [UsuarioAutenticadoGuard]},
+  { path: 'curriculo-detalhe/:id', component: CurriculoDetalheComponent, canActivate: [UsuarioAutenticadoGuard]},
+  { path: 'endereco-lista', component: EnderecoListaComponent, canActivate: [UsuarioAutenticadoGuard],
+    children: [  ]  },
+  { path: 'endereco-adicionar', component: EnderecoAdicionarComponent, canActivate: [UsuarioAutenticadoGuard]},
+  { path: 'endereco-atualizar/:id', component: EnderecoAtualizarComponent, canActivate: [UsuarioAutenticadoGuard]},
+  { path: 'endereco-detalhe/:id', component: EnderecoDetalheComponent, canActivate: [UsuarioAutenticadoGuard]}
 ];
 
 @NgModule({

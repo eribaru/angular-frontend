@@ -1,0 +1,67 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button (click)="voltar()">
+      <mat-icon>arrow_back </mat-icon>
+    </button>
+  {{getTitulo()}}
+  <span class="toolbar-spacer"></span>
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Apagar vaga" (click)="excluir()">
+    <mat-icon>delete</mat-icon>
+  </button>
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Editar" (click)="redirectToUpdate()">
+    <mat-icon>edit</mat-icon>
+  </button>
+
+
+  </mat-toolbar> <span class="toolbar-spacer"></span>
+<form [formGroup]="vagaForm"  novalidate>
+
+  <mat-card-content class="conteudo-empresa-adicionar">
+
+
+    <mat-form-field appearance="outline" class="form-field-full">
+        <mat-label>Área</mat-label>
+        <input   matInput  [disabled]="true" formControlName="area"  type="text" >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field-full">
+        <mat-label>Resposabilidades</mat-label>
+        <input formControlName="resposabilidades"  matInput  type="text"  >
+      </mat-form-field >
+      <mat-form-field appearance="outline" class="form-field-full">
+        <mat-label>Requisitos</mat-label>
+        <input formControlName="requisitos"  matInput  type="text"  >
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="form-field-full">
+        <mat-label>Carga horária</mat-label>
+        <input formControlName="carga_horaria"  matInput  type="text"  >
+      </mat-form-field>
+
+         <mat-form-field appearance="outline" class="form-field-full">
+           <mat-label>PCSC</mat-label>
+           <input  formControlName="pcsc"  matInput  type="text"  >
+         </mat-form-field>
+      <mat-checkbox class="example-margin"  formControlName="remoto" >Remoto</mat-checkbox>
+     <mat-form-field appearance="outline" class="form-field-full">
+       <mat-label>Local</mat-label>
+       <input formControlName="local"  matInput  type="text"  >
+     </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field-full">
+      <mat-label>Tipo regime</mat-label>
+      <input formControlName="contratacao"     matInput  type="text"  >
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field-full">
+      <mat-label>Tipo contrato</mat-label>
+      <input  formControlName="tipo_contrato"  matInput  type="text"  >
+    </mat-form-field>
+
+
+  <mat-form-field appearance="outline" class="form-field-full">
+    <mat-label>Data fechamento</mat-label>
+    <input matInput type="date"  formControlName="data_fechamento">
+    <mat-error  *ngIf="vagaForm.controls['data_fechamento'].errors?.['required'] && vagaForm.controls['data_fechamento'].touched">
+      Data fechamento é  <strong>obrigatória</strong>
+    </mat-error>
+  </mat-form-field>
+  </mat-card-content>
+</form>
