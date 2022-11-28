@@ -8,6 +8,7 @@ export interface IEndereco{
   cidade: number;
   empresa: string;
   usuario: string;
+  resumo: string;
   tipo: string;
   apelido: string;
   principal: boolean;

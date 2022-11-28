@@ -1,6 +1,6 @@
 export enum TipoEnderecoEnum {
-  residencial= "Residencial" ,
-  comercial = "Comercial"
+  residencial= "residencial" ,
+  comercial = "comercial"
 }
 
 export const TipoEnderecoMapping: Record<TipoEnderecoEnum, string> = {

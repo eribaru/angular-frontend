@@ -10,7 +10,7 @@
     <mat-action-list >
       <mat-list-item  *ngFor="let endereco of enderecos">
         <div mat-line><a  routerLink="#" (click)="redirectToDetails(endereco)">{{ endereco.apelido }}</a> </div>
-        <div mat-line>{{ endereco.rua }}</div>
+        <div mat-line>{{ endereco.resumo }}</div>
       </mat-list-item>
     </mat-action-list>
   </div>
