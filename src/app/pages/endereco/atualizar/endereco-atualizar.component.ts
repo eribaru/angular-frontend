@@ -163,8 +163,9 @@ export class EnderecoAtualizarComponent implements OnInit {
         let cidade;
         if (data) {
           cidade = data as ICidade;
-          this.estadosControl.patchValue(cidade.cod_estado as EstadosEnum);
-          this.estadosControl.setValue(cidade.cod_estado as EstadosEnum);
+          //this.estadosControl.patchValue(cidade.cod_estado as EstadosEnum);
+          const estado = Object.keys(EstadosEnum)[Object.values(EstadosEnum).indexOf(cidade.cod_estado as EstadosEnum)];
+          this.estadosControl.setValue(estado as EstadosEnum);
           console.log(this.estadosControl.value);
           this.cidadesControl.setValue(cidade);
 

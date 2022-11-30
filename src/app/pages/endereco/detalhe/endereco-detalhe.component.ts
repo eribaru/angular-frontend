@@ -10,7 +10,6 @@ import {EstadosEnum,EstadosMapping} from "../../../interfaces/Estados.enum";
 import {ICidade} from "../../../interfaces/ICidade";
 import {TipoEnderecoEnum,TipoEnderecoMapping} from "../../../interfaces/TipoEndereco.enum";
 import {IEndereco} from "../../../interfaces/IEndereco";
-import {IVaga} from "../../../interfaces/IVaga";
 
 @Component({
   selector: 'app-endereco-detalhe',
@@ -21,7 +20,7 @@ export class EnderecoDetalheComponent implements OnInit {
   isEditable = false;
   public endereco!: IEndereco;
   enderecoForm: FormGroup = new FormGroup({});
-  estadosControl = new FormControl<EstadosEnum | null>(null);
+  estadosControl = new FormControl<EstadosEnum | string | null>(null);
   cidadesControl = new FormControl<string | ICidade>('');
   empresasControl = new FormControl<string | IEmpresa>('');
   tipoEnderecoControl = new FormControl<TipoEnderecoEnum | null>(null);
@@ -121,8 +120,9 @@ export class EnderecoDetalheComponent implements OnInit {
         let cidade;
         if (data) {
           cidade = data as ICidade
-          //TipoContratoMapping[this.endereco.tipo_contrato as TipoContratoEnum]
-          this.estadosControl.setValue(cidade.cod_estado as EstadosEnum)
+
+          this.estadosControl.setValue(EstadosMapping[cidade.cod_estado as EstadosEnum]);
+
           this.cidadesControl.setValue(cidade.nom_cidade);
         }
       });
