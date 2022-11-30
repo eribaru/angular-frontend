@@ -4,10 +4,11 @@
     </button>
   {{getTitulo()}}
   <span class="toolbar-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Apagar vaga" (click)="excluir()">
+
+  <button  *ngIf="isRecrutador" mat-icon-button class="example-icon favorite-icon" aria-label="Apagar vaga" (click)="excluir()">
     <mat-icon>delete</mat-icon>
   </button>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Editar" (click)="redirectToUpdate()">
+  <button *ngIf="isRecrutador"  mat-icon-button class="example-icon favorite-icon" aria-label="Editar" (click)="redirectToUpdate()">
     <mat-icon>edit</mat-icon>
   </button>
 
@@ -65,3 +66,11 @@
   </mat-form-field>
   </mat-card-content>
 </form>
+<div *ngIf="!isRecrutador"  class=".fab-container">
+  <button *ngIf="!estaInscrito" (click)="seInscrever()" aria-label="Icone para inscrever em uma nova vaga" color="primary" mat-fab>
+    <mat-icon>subscript</mat-icon>
+  </button>
+  <button *ngIf="estaInscrito"  (click)="verInscricao()" aria-label="Icone para ver inscrição na vaga" color="primary" mat-fab>
+    <mat-icon>visibility</mat-icon>
+  </button>
+</div>

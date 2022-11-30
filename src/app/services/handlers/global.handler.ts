@@ -33,17 +33,17 @@ export class GlobalErrorHandler implements ErrorHandler {
                 message = "";
                 if (error.error['cnpj']) {
                   if (error.error['cnpj'].includes("empresa with this cnpj already exists.")) {
-                    message += 'CNPJ já cadastrado';
+                    message += 'CNPJ já cadastrado\n';
                   }
                 }
                 if (error.error['email']) {
                   if (error.error['email'].includes("usuario with this email already exists.")) {
-                    message += ('Usuário já cadastrado');
+                    message += ('Email já cadastrado\n');
                   }
                 }
                 if (error.error['cpf']) {
                   if (error.error['cpf'].includes("usuario with this cpf already exists.")) {
-                    notifier.showError('Usuário já cadastrado');
+                    message +=('CPF já cadastrado\n');
                   }
                 } else {
                   console.log(error.error);

@@ -8,6 +8,7 @@ import {IVaga} from "../../../interfaces/IVaga";
 import {IEmpresa} from "../../../interfaces/IEmpresa";
 import {TipoContratoEnum, TipoContratoMapping} from "../../../interfaces/TipoContrato.enum";
 import {TipoRegimeEnum, TipoRegimeMapping} from "../../../interfaces/TipoRegime.enum";
+import {VerificarPermissoes} from "../../../services/guards/verificarPermissao";
 
 @Component({
   selector: 'app-vaga-detalhe',
@@ -15,7 +16,7 @@ import {TipoRegimeEnum, TipoRegimeMapping} from "../../../interfaces/TipoRegime.
   styleUrls: ['./vaga-detalhe.component.css']
 })
 export class VagaDetalheComponent implements OnInit {
-  isEditable = false;
+  isRecrutador =  VerificarPermissoes.temPerfilRecrutador();
   public vaga!: IVaga;
   vagaForm: FormGroup = new FormGroup({});
   empresasControl = new FormControl<string | IEmpresa>('');
@@ -120,11 +121,20 @@ export class VagaDetalheComponent implements OnInit {
       this.reloadComponent();
     });
   };
+  estaInscrito: boolean = false;
 
 
   reloadComponent() {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate(['vaga-lista']).then();
+  }
+
+  seInscrever() {
+
+  }
+
+  verInscricao() {
+
   }
 }
