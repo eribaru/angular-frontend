@@ -10,8 +10,8 @@ import { UsuarioService } from '../../../services/usuario.service';
   styleUrls: ['./principal.component.scss']
 })
 export class PrincipalComponent implements OnInit {
-  // temPermissaoCandidato : boolean = VerificarPermissoes.temPerfilCanditado();
-  // temPermissaoRecrutador : boolean = VerificarPermissoes.temPerfilRecrutador();
+   temPermissaoCandidato : boolean = VerificarPermissoes.temPerfilCanditado();
+  temPermissaoRecrutador : boolean = VerificarPermissoes.temPerfilRecrutador();
   constructor(private usuarioService: UsuarioService) { }
 
   ngOnInit(): void {

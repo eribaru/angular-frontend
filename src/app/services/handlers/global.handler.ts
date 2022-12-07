@@ -1,17 +1,19 @@
-import { ErrorHandler, Injectable, Injector } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import {ErrorHandler, Injectable, Injector, NgZone} from '@angular/core';
+import {HttpErrorResponse, HttpHandler, HttpRequest} from '@angular/common/http';
 
 import { UsuarioService } from '../usuario.service';
 import { ErrorService } from '../error.service';
 import { NotificationService } from '../notification.service';
 import {Router} from "@angular/router";
+import {EventData} from "../../pages/compartilhado/event.class";
+import {EventBusService} from "../event-bus.service";
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
 
     // Error handling is important and needs to be loaded first.
     // Because of this we should manually inject the services with Injector.
-    constructor(private injector: Injector, private _router: Router) { }
+    constructor(private injector: Injector, private _router: Router,private zone: NgZone, private usuarioService: UsuarioService,private eventBusService: EventBusService) { }
 
     handleError(error: Error | HttpErrorResponse) {
 
@@ -53,11 +55,10 @@ export class GlobalErrorHandler implements ErrorHandler {
               } else {
                 if (error.status == 401 ){
                   notifier.showError('Sessão expirada');
-                  //this.goToLogin();
+
                 }else{
                   if (error.status == 403 ){
                     notifier.showError('Sem autorização');
-                    //this.goToLogin();
                   }else {
                     notifier.showError(message);
                   }
@@ -77,8 +78,14 @@ export class GlobalErrorHandler implements ErrorHandler {
     }
 
   goToLogin() {
-    this._router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this._router.onSameUrlNavigation = 'reload';
-    this._router.navigate(['/login']).then();
+
+    this.zone.run(() => {
+      this._router.routeReuseStrategy.shouldReuseRoute = () => false;
+      this._router.onSameUrlNavigation = 'reload';
+      this._router.navigate(['login']).then();
+    });
+
   }
+
+
 }

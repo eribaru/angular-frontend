@@ -6,40 +6,6 @@
 </mat-toolbar>
 <span class="toolbar-spacer"></span>
 <div>
-<!--
-<table [dataSource]="dataSource" mat-table>
-    <ng-container matColumnDef="nome">
-      <th *matHeaderCellDef mat-header-cell> Nome </th>
-      <td *matCellDef="let element" mat-cell> {{element.nome}} </td>
-    </ng-container>
-    <ng-container matColumnDef="cnpj">
-      <th *matHeaderCellDef mat-header-cell> CNPJ </th>
-      <td *matCellDef="let element" mat-cell> {{element.cnpj }} </td>
-    </ng-container>
-    <ng-container matColumnDef="ramo">
-      <th *matHeaderCellDef mat-header-cell> Ramo </th>
-      <td *matCellDef="let element" mat-cell> {{element.ramo}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="update">
-        <th *matHeaderCellDef mat-header-cell> Atualizar </th>
-        <td *matCellDef="let element" mat-cell>
-          <button (click)="redirectToUpdate(element)" color="accent" mat-icon-button>
-              <mat-icon class="mat-18">system_update</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="delete">
-          <th *matHeaderCellDef mat-header-cell> Apagar </th>
-          <td *matCellDef="let element" mat-cell>
-            <button (click)="redirectToDelete(element.id)" color="warn" mat-icon-button>
-                <mat-icon class="mat-18">delete</mat-icon>
-            </button>
-          </td>
-        </ng-container>
-    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-  </table>-->
   <div>
   <mat-action-list >
     <mat-list-item  *ngFor="let vaga of vagas">

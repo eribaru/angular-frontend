@@ -9,6 +9,7 @@ import {IEmpresa} from "../../../interfaces/IEmpresa";
 import {TipoContratoEnum, TipoContratoMapping} from "../../../interfaces/TipoContrato.enum";
 import {TipoRegimeEnum, TipoRegimeMapping} from "../../../interfaces/TipoRegime.enum";
 import {VerificarPermissoes} from "../../../services/guards/verificarPermissao";
+import {IInscricao} from "../../../interfaces/IInscricao";
 
 @Component({
   selector: 'app-vaga-detalhe',
@@ -121,7 +122,8 @@ export class VagaDetalheComponent implements OnInit {
       this.reloadComponent();
     });
   };
-  estaInscrito: boolean = false;
+  estaInscrito = false;
+  private iInscricao: IInscricao|null = null;
 
 
   reloadComponent() {
@@ -131,10 +133,20 @@ export class VagaDetalheComponent implements OnInit {
   }
 
   seInscrever() {
+    this.apiService.getData('inscricoes/' + this.vaga.id).subscribe((data) => {
+      this.snackBar.open('Sucesso', 'Item foi apagado', {
+        duration: 3000,
+      });
+      this.reloadComponent();
+    });
+  }
+
+  buscarInscricao(){
+    //GET /api/v1/inscricoes?usuario=0b94132b-fd32-4e72-871c-54576e61e833&vaga=3dad441e-2852-4fd3-9664-42882ddd9b7a
 
   }
 
   verInscricao() {
-
+    return this.router.navigate(['vaga-atualizar/' + this.vaga.id],{ state: { example: this.vaga} } );
   }
 }

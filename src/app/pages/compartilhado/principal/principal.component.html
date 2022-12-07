@@ -1,11 +1,15 @@
 <mat-sidenav-container fullscreen>
   <mat-sidenav mode="side" #sidenav opened position="start">
-    Dados Pessoais
+
     <mat-list>
-      <mat-list-item> Informações </mat-list-item>
-      <mat-list-item routerLink = "endereco-lista"> Endereço </mat-list-item>
+      <mat-list-item> Meus dados </mat-list-item>
+      <mat-list-item routerLink = "endereco-lista">Endereços </mat-list-item>
     </mat-list>
-     <mat-divider></mat-divider>
+    <mat-divider *ngIf="temPermissaoCandidato"></mat-divider>
+    <mat-list>
+      <mat-list-item *ngIf="temPermissaoCandidato" routerLink = "inscricao-lista">Minhas inscrições </mat-list-item>
+    </mat-list>
+
 <!--     <div *ngIf="temPermissaoCandidato" >Currículo-->
 <!--     <mat-nav-list>-->
 <!--       <mat-list-item> Formação </mat-list-item>-->
@@ -13,6 +17,7 @@
 <!--      </mat-nav-list>-->
 <!--      <mat-divider></mat-divider>-->
 <!--    </div>-->
+    <mat-divider></mat-divider>
       <mat-action-list>
         <button mat-list-item (click)="deslogar()">Sair</button>
       </mat-action-list>

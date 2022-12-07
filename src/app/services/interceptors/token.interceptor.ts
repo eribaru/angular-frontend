@@ -11,12 +11,18 @@ import { Observable, throwError } from 'rxjs';
 import { UsuarioService } from '../usuario.service';
 import { catchError, retry } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import {EventData} from "../../pages/compartilhado/event.class";
+import {EventBusService} from "../event-bus.service";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
+  private isRefreshing = false;
+
+
   constructor(
     private usuarioService: UsuarioService,
-    private _router: Router
+    private _router: Router,
+    private eventBusService: EventBusService
   ) {}
   intercept(
     request: HttpRequest<any>,
@@ -35,12 +41,12 @@ export class TokenInterceptor implements HttpInterceptor {
         },
       });
       return next.handle(request).pipe(
-        retry(1),
         catchError((error: HttpErrorResponse) => {
-          if (error.status === 403) {
-            this._router.navigate(['/login']).then();
+          if (error.status === 403 || error.status === 403) {
+            //this._router.navigate(['/login']).then();
             // refresh token
-            return throwError(() => error);
+            //return throwError(() => error);
+            return this.handle401Error(request, next);
           } else {
             return throwError(() => error);
           }
@@ -49,5 +55,17 @@ export class TokenInterceptor implements HttpInterceptor {
     } else {
       return next.handle(request);
     }
+  }
+
+  private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
+    if (!this.isRefreshing) {
+      this.isRefreshing = true;
+
+      if (this.usuarioService.logado) {
+        this.eventBusService.emit(new EventData('logout', null));
+      }
+    }
+
+    return next.handle(request);
   }
 }

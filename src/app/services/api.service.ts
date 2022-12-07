@@ -61,7 +61,7 @@ export class ApiService {
         }
       }),
       catchError((error) => {
-        console.log('Erro ao listar', typeof error);
+        console.log('Erro na url '+url);
         throw error;
       })
     );
