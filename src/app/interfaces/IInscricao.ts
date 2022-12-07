@@ -1,12 +1,14 @@
 import {IEmpresa} from "./IEmpresa";
 
 export interface IInscricao {
-  id: string;
-  feedback: string;
-  data_inscricao: Date;
-  apto_entrevista: boolean;
-  fim: Date;
+  vaga_nome: any;
+  feedback: string|null;
+  data_inscricao: Date|string|null;
+  id: string|null;
+  apto_entrevista: boolean|null;
+  fim: Date|null;
   vaga: string;
-  usuario: string;
+  usuario: string|null;
   status:string;
+  status_nome:string;
 }

@@ -23,6 +23,9 @@ import { EnderecoListaComponent } from './pages/endereco/lista/endereco-lista.co
 import { EnderecoDetalheComponent } from './pages/endereco/detalhe/endereco-detalhe.component';
 import { EnderecoAtualizarComponent } from './pages/endereco/atualizar/endereco-atualizar.component';
 import { EnderecoAdicionarComponent } from './pages/endereco/adicionar/endereco-adicionar.component';
+import {InscricaoDetalheComponent} from './pages/inscricao/detalhe/inscricao-detalhe.component';
+import {InscricaoListaComponent} from './pages/inscricao/lista/inscricao-lista.component';
+import {InscricaoAtualizarComponent} from './pages/inscricao/atualizar/inscricao-atualizar.component';
 
 const routes: Routes = [
   { path: 'cadastro', component: CadastroComponent, canActivate: [UsuarioNaoAutenticadoGuard]},
@@ -52,7 +55,11 @@ const routes: Routes = [
     children: [  ]  },
   { path: 'endereco-adicionar', component: EnderecoAdicionarComponent, canActivate: [UsuarioAutenticadoGuard]},
   { path: 'endereco-atualizar/:id', component: EnderecoAtualizarComponent, canActivate: [UsuarioAutenticadoGuard]},
-  { path: 'endereco-detalhe/:id', component: EnderecoDetalheComponent, canActivate: [UsuarioAutenticadoGuard]}
+  { path: 'endereco-detalhe/:id', component: EnderecoDetalheComponent, canActivate: [UsuarioAutenticadoGuard]},
+  { path: 'inscricao-lista', component: InscricaoListaComponent, canActivate: [UsuarioAutenticadoGuard],
+    children: [  ]  },
+ { path: 'inscricao-atualizar/:id', component: InscricaoAtualizarComponent, canActivate: [UsuarioAutenticadoGuard]},
+  { path: 'inscricao-detalhe/:id', component: InscricaoDetalheComponent, canActivate: [UsuarioAutenticadoGuard]}
 ];
 
 @NgModule({

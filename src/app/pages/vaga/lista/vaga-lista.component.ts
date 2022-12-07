@@ -16,15 +16,8 @@ export class VagaListaComponent implements OnInit {
   [x: string]: any;
 
   vagas : IVaga[];
-  public displayedColumns = [
-    'nome',
-    'cnpj',
-    'ramo',
-    'update',
-    'delete',
-    //public displayedColumns = ['nome', 'cnpj', 'ramo','sede','details', 'update', 'delete'
-  ];
-  public dataSource = new MatTableDataSource<IVaga>();
+
+
   constructor(
     private repoService: ApiService,
     private location: Location,
@@ -39,7 +32,6 @@ export class VagaListaComponent implements OnInit {
   }
   public getAllVaga = () => {
     this.repoService.getData('vagas').subscribe((res) => {
-      this.dataSource.data = res as IVaga[];
       this.vagas   = res as IVaga[]
     });
   };

@@ -62,6 +62,9 @@ import {EnderecoListaComponent} from './pages/endereco/lista/endereco-lista.comp
 import {EnderecoDetalheComponent} from './pages/endereco/detalhe/endereco-detalhe.component';
 import {EnderecoAtualizarComponent} from './pages/endereco/atualizar/endereco-atualizar.component';
 import {EnderecoAdicionarComponent} from './pages/endereco/adicionar/endereco-adicionar.component';
+import {InscricaoDetalheComponent} from './pages/inscricao/detalhe/inscricao-detalhe.component';
+import {InscricaoListaComponent} from './pages/inscricao/lista/inscricao-lista.component';
+import {InscricaoAtualizarComponent} from './pages/inscricao/atualizar/inscricao-atualizar.component';
 
 import {NgxMaskModule} from 'ngx-mask';
 @NgModule({
@@ -86,6 +89,9 @@ import {NgxMaskModule} from 'ngx-mask';
     EnderecoListaComponent,
     EnderecoAdicionarComponent,
     EnderecoAtualizarComponent,
+    InscricaoDetalheComponent,
+    InscricaoListaComponent,
+    InscricaoAtualizarComponent,
     PrincipalComponent
 
   ],

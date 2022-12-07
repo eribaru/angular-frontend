@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common'
+import {DatePipe, Location} from '@angular/common'
 import {Router} from "@angular/router";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ApiService} from "../../../services/api.service";
@@ -10,6 +10,7 @@ import {TipoContratoEnum, TipoContratoMapping} from "../../../interfaces/TipoCon
 import {TipoRegimeEnum, TipoRegimeMapping} from "../../../interfaces/TipoRegime.enum";
 import {VerificarPermissoes} from "../../../services/guards/verificarPermissao";
 import {IInscricao} from "../../../interfaces/IInscricao";
+import {UsuarioService} from "../../../services/usuario.service";
 
 @Component({
   selector: 'app-vaga-detalhe',
@@ -17,19 +18,22 @@ import {IInscricao} from "../../../interfaces/IInscricao";
   styleUrls: ['./vaga-detalhe.component.css']
 })
 export class VagaDetalheComponent implements OnInit {
-  isRecrutador =  VerificarPermissoes.temPerfilRecrutador();
+  public isRecrutador =  VerificarPermissoes.temPerfilRecrutador();
   public vaga!: IVaga;
-  vagaForm: FormGroup = new FormGroup({});
-  empresasControl = new FormControl<string | IEmpresa>('');
+  public vagaForm: FormGroup = new FormGroup({});
+  public empresasControl = new FormControl<string | IEmpresa>('');
   public TipoContratoMapping = TipoContratoMapping;
   public TipoRegimeMapping = TipoRegimeMapping;
+  public inscricoes: IInscricao[];
+  public estaInscrito = false;
+  private iInscricao: IInscricao|null = null;
 
   constructor(private router: Router,
               private formBuilder: FormBuilder,
               private location: Location,
               private apiService: ApiService,
               private snackBar: MatSnackBar) {
-
+    this.inscricoes =[]
     const navigation = this.router.getCurrentNavigation();
     if(navigation!=null) {
       const state = navigation.extras.state as { example: IVaga };
@@ -59,6 +63,7 @@ export class VagaDetalheComponent implements OnInit {
 
       if(this.vaga!=null ){
         this.recuperaEmpresa();
+        this.getAllInscricoes();
         this.vagaForm.controls["area"].disable();
         this.vagaForm.controls["area"].setValue(this.vaga.area);
         this.vagaForm.controls["resposabilidades"].disable();
@@ -122,9 +127,21 @@ export class VagaDetalheComponent implements OnInit {
       this.reloadComponent();
     });
   };
-  estaInscrito = false;
-  private iInscricao: IInscricao|null = null;
 
+
+  public getAllInscricoes = () => {
+    let urlInscricoes = 'inscricoes?vaga='+this.vaga.id;
+    if(!this.isRecrutador && UsuarioService.obterIdUsuarioLogado){
+      urlInscricoes =  urlInscricoes+ '&usuario='+UsuarioService.obterIdUsuarioLogado;
+    }
+    this.apiService.getData(urlInscricoes).subscribe((res) => {
+      this.inscricoes   = res as IInscricao[]
+      if(!this.isRecrutador &&  this.inscricoes.length===1){
+        this.iInscricao =  this.inscricoes[0];
+        this.estaInscrito = true;
+      }
+    });
+  };
 
   reloadComponent() {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -133,20 +150,39 @@ export class VagaDetalheComponent implements OnInit {
   }
 
   seInscrever() {
-    this.apiService.getData('inscricoes/' + this.vaga.id).subscribe((data) => {
-      this.snackBar.open('Sucesso', 'Item foi apagado', {
-        duration: 3000,
+    if(this.iInscricao == null && !this.estaInscrito){
+      const date=new Date();
+      //const dataInscricao =this.datepipe.transform(date, 'yyyy-MM-dd');
+        const novaInscricao: { feedback: null; vaga: string;usuario: string | null; fim: null; apto_entrevista: boolean; status: string } = {
+            apto_entrevista: false,
+            feedback: null,
+            fim: null,
+            status: "00000000-0000-0000-0000-000000000003",
+            usuario: UsuarioService.obterIdUsuarioLogado,
+            vaga: this.vaga.id
+        }
+        this.apiService.postData('inscricoes', novaInscricao).subscribe({
+        next: () => {
+            this.snackBar.open('Sucesso', 'Inscrição foi salva', {
+              duration: 3000,
+            });
+            this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+            this.router.onSameUrlNavigation = 'reload';
+            this.router.navigate(['vaga-lista']).then().then();
+        },
+        error: (error) => {
+            console.error('There was an error!', error);
+            throw error;
+        },
       });
-      this.reloadComponent();
-    });
-  }
-
-  buscarInscricao(){
-    //GET /api/v1/inscricoes?usuario=0b94132b-fd32-4e72-871c-54576e61e833&vaga=3dad441e-2852-4fd3-9664-42882ddd9b7a
-
+    }
   }
 
   verInscricao() {
-    return this.router.navigate(['vaga-atualizar/' + this.vaga.id],{ state: { example: this.vaga} } );
+    if(this.iInscricao !=null && this.iInscricao.id!=null){
+      return this.router.navigate(['inscricao-detalhe/' + this.iInscricao.id],{ state: { example: this.vaga} } );
+    }else{
+      return this.router.navigate(['inscricao-lista/' ],{ state: { example: this.vaga} } );
+    }
   }
 }
