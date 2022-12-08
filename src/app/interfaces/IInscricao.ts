@@ -11,4 +11,5 @@ export interface IInscricao {
   usuario: string|null;
   status:string;
   status_nome:string;
+  usuario_nome:string;
 }

@@ -16,6 +16,17 @@
       <input   matInput  [disabled]="true" formControlName="vaga_nome"  type="text" >
     </mat-form-field>
 
+
+    <mat-form-field appearance="fill">
+      <mat-label>Status</mat-label>
+      <mat-select [formControl]="statusControl" required>
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let status of statusInscricoes" [value]="status">
+          {{status.valor}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="statusControl.hasError('required')">Status  <strong>obrigatório</strong></mat-error>
+    </mat-form-field>
     <mat-form-field appearance="outline" class="form-field-full">
       <mat-label>Feedback</mat-label>
       <input formControlName="feedback"  matInput  type="text"  >
@@ -24,11 +35,6 @@
       <mat-label>APto</mat-label>
       <input formControlName="apto_entrevista"  matInput  type="text"  >
     </mat-form-field>
-    <mat-form-field appearance="outline" class="form-field-full">
-      <mat-label>Status</mat-label>
-      <input formControlName="status_nome"  matInput  type="text"  >
-    </mat-form-field>
-
     <mat-card-actions align="end">
       <button (click)="salvar()" align="end"  color="primary" mat-raised-button>Salvar</button>
     </mat-card-actions>

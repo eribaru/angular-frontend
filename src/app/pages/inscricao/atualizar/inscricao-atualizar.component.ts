@@ -5,7 +5,7 @@ import {ApiService} from '../../../services/api.service';
 import {Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {IInscricao} from "../../../interfaces/IInscricao";
-import {IVaga} from "../../../interfaces/IVaga";
+import {IStatus} from "../../../interfaces/IStatus";
 
 @Component({
   selector: 'app-inscricao-atualizar',
@@ -15,6 +15,8 @@ import {IVaga} from "../../../interfaces/IVaga";
 export class InscricaoAtualizarComponent implements OnInit {
   public inscricao!: IInscricao;
   inscricaoForm: FormGroup = new FormGroup({});
+  statusControl = new FormControl<string | IStatus>('', Validators.required);
+  public statusInscricoes: IStatus[] = [];
 
   constructor(private router: Router,
               private formBuilder: FormBuilder,
@@ -31,6 +33,7 @@ export class InscricaoAtualizarComponent implements OnInit {
     }}
 
   ngOnInit(): void {
+    this.getAllStatusInscricoes();
     this.inscricaoForm = this.formBuilder.group({
       vaga_nome: [ null],
       feedback: [null],
@@ -39,6 +42,7 @@ export class InscricaoAtualizarComponent implements OnInit {
       status_nome: [null],
     });
     if(this.inscricao!=null ){
+      this.inscricaoForm.controls["vaga_nome"].disable();
       this.inscricaoForm.controls["vaga_nome"].setValue(this.inscricao.vaga_nome);
       this.inscricaoForm.controls["feedback"].setValue(this.inscricao.feedback);
       this.inscricaoForm.controls["apto_entrevista"].setValue(this.inscricao.apto_entrevista);
@@ -54,13 +58,13 @@ export class InscricaoAtualizarComponent implements OnInit {
 
   salvar(): void {
     console.log(this.inscricaoForm.value);
-    this.updateSuscriptionDataToApi();
+    this.updateSubcriptionDataToApi();
 
   }
 
 
 
-  public updateSuscriptionDataToApi = () => {
+  public updateSubcriptionDataToApi = () => {
     const inscricaoCamposAtualizados = this.inscricaoForm.getRawValue() as IInscricao;
     const inscricaoAtualizada:{ feedback: string | null; vaga: string; data_inscricao: Date | string | null; fim: Date | null; id: string | null; apto_entrevista: boolean | null; status: string } = {
       apto_entrevista: this.inscricao.apto_entrevista,
@@ -93,4 +97,17 @@ export class InscricaoAtualizarComponent implements OnInit {
       return "";
     }
   }
+
+  public getAllStatusInscricoes = () => {
+    this.apiService.getData('statusInscricao').subscribe((res) => {
+      this.statusInscricoes = res as IStatus[];
+      for (const item of this.statusInscricoes) {
+        if(item.id==this.inscricao.status){
+          this.statusControl.setValue(item);
+        }
+      }
+    });
+
+  }
+
 }

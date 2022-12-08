@@ -4,6 +4,9 @@ import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {IInscricao} from "../../../interfaces/IInscricao";
+import {UsuarioService} from "../../../services/usuario.service";
+import {VerificarPermissoes} from "../../../services/guards/verificarPermissao";
+import {IVaga} from "../../../interfaces/IVaga";
 
 
 @Component({
@@ -12,7 +15,8 @@ import {IInscricao} from "../../../interfaces/IInscricao";
   styleUrls: ['./inscricao-lista.component.scss'],
 })
 export class InscricaoListaComponent implements OnInit {
-
+  public isRecrutador =  VerificarPermissoes.temPerfilRecrutador();
+  public vaga!: IVaga;
   inscricoes : IInscricao[];
 
   constructor(
@@ -22,13 +26,25 @@ export class InscricaoListaComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {
     this.inscricoes = [];
-
+    const navigation = this._router.getCurrentNavigation();
+    if(navigation!=null){
+      const state = navigation.extras.state as {example: IVaga};
+      if(state!=null && state.example!=null){
+        this.vaga= state.example;
+      }
+    }
   }
   ngOnInit() {
-    this.getAllCurriculo();
+    this.getAllInscricoes();
   }
-  public getAllCurriculo = () => {
-    this.repoService.getData('inscricoes').subscribe((res) => {
+  public getAllInscricoes = () => {
+    let urlInscricoes = 'inscricoes';
+    if(this.isRecrutador && UsuarioService.obterIdUsuarioLogado){
+      urlInscricoes =  urlInscricoes+ '?vaga='+this.vaga.id ;
+    }else{
+      urlInscricoes =  urlInscricoes+ '?usuario='+UsuarioService.obterIdUsuarioLogado;
+    }
+    this.repoService.getData(urlInscricoes).subscribe((res) => {
       this.inscricoes   = res as IInscricao[]
     });
   };
