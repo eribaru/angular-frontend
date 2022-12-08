@@ -6,6 +6,9 @@
 
 
 </mat-toolbar> <span class="toolbar-spacer"></span>
+<mat-card-content class="container">
+
+  <mat-card class="card-adicionar">
 <form [formGroup]="inscricaoForm"  novalidate>
 
   <mat-card-content class="conteudo-empresa-adicionar">
@@ -31,10 +34,11 @@
       <mat-label>Feedback</mat-label>
       <input formControlName="feedback"  matInput  type="text"  >
     </mat-form-field >
-    <mat-form-field appearance="outline" class="form-field-full">
+    <!--<mat-form-field appearance="outline" class="form-field-full">
       <mat-label>APto</mat-label>
       <input formControlName="apto_entrevista"  matInput  type="text"  >
-    </mat-form-field>
+    </mat-form-field>-->
+    <mat-checkbox class="example-margin"  formControlName="apto_entrevista">Apto entrevista</mat-checkbox>
     <mat-card-actions align="end">
       <button (click)="salvar()" align="end"  color="primary" mat-raised-button>Salvar</button>
     </mat-card-actions>

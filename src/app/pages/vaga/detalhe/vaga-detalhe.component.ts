@@ -120,12 +120,18 @@ export class VagaDetalheComponent implements OnInit {
   };
 
   public excluir = () => {
-    this.apiService.delete('vagas/' + this.vaga.id).subscribe((data) => {
-      this.snackBar.open('Sucesso', 'Item foi apagado', {
+    if(this.inscricoes && this.inscricoes.length>0){
+      this.snackBar.open('Erro', 'Vaga tem inscrições e não pode ser apagada', {
         duration: 3000,
       });
-      this.reloadComponent();
-    });
+    }else {
+      this.apiService.delete('vagas/' + this.vaga.id).subscribe((data) => {
+        this.snackBar.open('Sucesso', 'Item foi apagado', {
+          duration: 3000,
+        });
+        this.reloadComponent();
+      });
+    }
   };
 
 

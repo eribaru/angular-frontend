@@ -65,29 +65,39 @@ export class InscricaoAtualizarComponent implements OnInit {
 
 
   public updateSubcriptionDataToApi = () => {
+    const status = this.statusControl.getRawValue() as IStatus
     const inscricaoCamposAtualizados = this.inscricaoForm.getRawValue() as IInscricao;
-    const inscricaoAtualizada:{ feedback: string | null; vaga: string; data_inscricao: Date | string | null; fim: Date | null; id: string | null; apto_entrevista: boolean | null; status: string } = {
-      apto_entrevista: this.inscricao.apto_entrevista,
+    const inscricaoAtualizada:{ feedback: string | null; vaga: string; data_inscricao: Date | string | null; usuario: string|null; fim: Date | null; id: string | null; apto_entrevista: boolean | null; status: string } = {
+      apto_entrevista: inscricaoCamposAtualizados.apto_entrevista,
       data_inscricao:  this.inscricao.data_inscricao,
       feedback: inscricaoCamposAtualizados.feedback,
       fim: inscricaoCamposAtualizados.fim,
       id: this.inscricao.id,
-      status: "",
+      status: status.id,
+      usuario: this.inscricao.usuario,
       vaga: this.inscricao.vaga
     };
-    this.apiService.putData('inscricoes/'+this.inscricao.id, inscricaoAtualizada).subscribe({
-      next: (data) => {
-        this.snackBar.open('Sucesso', 'Item foi atualizado', {
-          duration: 3000,
-        });
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(['vaga-lista']).then();
-      },
-      error: (error) => {
-        console.error('There was an error!', error);
-      },
-    });
+    if((status.valor=='Aprovado'|| status.valor=='Reprovado')  ){
+      if(!inscricaoCamposAtualizados.feedback){
+        this.snackBar.open("Erro","Feedback em branco");
+        return;
+      }
+    }
+
+      this.apiService.putData('inscricoes/' + this.inscricao.id, inscricaoAtualizada).subscribe({
+        next: (data) => {
+          this.snackBar.open('Sucesso', 'Item foi atualizado', {
+            duration: 3000,
+          });
+          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          this.router.onSameUrlNavigation = 'reload';
+          this.router.navigate(['vaga-lista']).then();
+        },
+        error: (error) => {
+          console.error('There was an error!', error);
+        },
+      });
+
   };
 
   getTitulo():string {

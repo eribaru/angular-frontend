@@ -6,6 +6,7 @@ import {ApiService} from "../../../services/api.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {IVaga} from "../../../interfaces/IVaga";
 import {IInscricao} from "../../../interfaces/IInscricao";
+import {VerificarPermissoes} from "../../../services/guards/verificarPermissao";
 
 @Component({
   selector: 'app-inscricao-detalhe',
@@ -13,7 +14,7 @@ import {IInscricao} from "../../../interfaces/IInscricao";
   styleUrls: ['./inscricao-detalhe.component.css']
 })
 export class InscricaoDetalheComponent implements OnInit {
-
+  public isRecrutador =  VerificarPermissoes.temPerfilRecrutador();
   public inscricao!: IInscricao;
   inscricaoForm: FormGroup = new FormGroup({});
 
