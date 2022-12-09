@@ -40,6 +40,7 @@ export class InscricaoDetalheComponent implements OnInit {
       data_inscricao: [null],
       apto_entrevista: [null],
       status_nome: [null],
+      usuario_nome: [null],
     });
     if(this.inscricao!=null ){
         this.inscricaoForm.controls["vaga_nome"].disable();
@@ -50,6 +51,9 @@ export class InscricaoDetalheComponent implements OnInit {
         this.inscricaoForm.controls["apto_entrevista"].setValue(this.inscricao.apto_entrevista);
         this.inscricaoForm.controls["status_nome"].disable();
         this.inscricaoForm.controls["status_nome"].setValue(this.inscricao.status_nome);
+        this.inscricaoForm.controls["usuario_nome"].disable();
+        this.inscricaoForm.controls["usuario_nome"].setValue(this.inscricao.usuario_nome);
+
     }
   }
 

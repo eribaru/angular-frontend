@@ -25,7 +25,10 @@
         <mat-label>Cargo Vaga</mat-label>
         <input   matInput  [disabled]="true" formControlName="vaga_nome"  type="text" >
       </mat-form-field>
-
+    <mat-form-field appearance="outline" class="form-field-full">
+      <mat-label>Nome candidato</mat-label>
+      <input   matInput  [disabled]="true" formControlName="usuario_nome"  type="text" >
+    </mat-form-field>
       <mat-form-field appearance="outline" class="form-field-full">
         <mat-label>Feedback</mat-label>
         <input formControlName="feedback"  matInput  type="text"  >

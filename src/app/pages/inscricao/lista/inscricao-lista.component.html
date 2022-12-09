@@ -9,7 +9,8 @@
   <div>
     <mat-action-list >
       <mat-list-item  *ngFor="let incricao of inscricoes">
-        <div mat-line><a  routerLink="#" (click)="redirectToDetails(incricao)">{{ incricao.vaga_nome }}</a> </div>
+        <div mat-line *ngIf="!isRecrutador"><a  routerLink="#" (click)="redirectToDetails(incricao)">{{ incricao.vaga_nome }}</a> </div>
+        <div mat-line *ngIf="isRecrutador"><a  routerLink="#" (click)="redirectToDetails(incricao)">{{ incricao.usuario_nome }}</a> </div>
         <div mat-line>Data inscrição: {{ incricao.data_inscricao | date :'short' }}</div>
       </mat-list-item>
     </mat-action-list>
