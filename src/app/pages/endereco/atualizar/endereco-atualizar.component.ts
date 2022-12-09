@@ -143,7 +143,7 @@ export class EnderecoAtualizarComponent implements OnInit {
 
   salvar(): void {
     console.log(this.enderecoForm.value);
-    this.updateVagaDataToApi();
+    this.updateEnderecoDataToApi();
 
   }
 
@@ -174,10 +174,12 @@ export class EnderecoAtualizarComponent implements OnInit {
     }
   };
 
-  public updateVagaDataToApi = () => {
+  public updateEnderecoDataToApi = () => {
 
     const endereco = this.enderecoForm.getRawValue() as IEndereco;
     const empresaSelecionada : IEmpresa = this.empresasControl.value as IEmpresa ;
+    const cidadeSelecionada : ICidade = this.cidadesControl.value as ICidade ;
+    endereco.cidade=cidadeSelecionada.cod_cidade;
     endereco.empresa = empresaSelecionada.id;
     endereco.tipo = this.tipoEnderecoControl.value as TipoEnderecoEnum;
     const id_usuario = UsuarioService.obterIdUsuarioLogado;
