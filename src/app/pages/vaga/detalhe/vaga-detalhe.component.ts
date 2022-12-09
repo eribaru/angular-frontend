@@ -186,7 +186,7 @@ export class VagaDetalheComponent implements OnInit {
 
   verInscricao() {
     if(this.iInscricao !=null && this.iInscricao.id!=null){
-      return this.router.navigate(['inscricao-detalhe/' + this.iInscricao.id],{ state: { example: this.vaga} } );
+      return this.router.navigate(['inscricao-detalhe/' + this.iInscricao.id],{ state: { example: this.iInscricao} } );
     }else{
       return this.router.navigate(['inscricao-lista/' ],{ state: { example: this.vaga} } );
     }

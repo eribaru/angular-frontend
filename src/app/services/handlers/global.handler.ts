@@ -43,9 +43,10 @@ export class GlobalErrorHandler implements ErrorHandler {
                     message += ('Email já cadastrado\n');
                   }
                 }
-                if (error.error['cpf']) {
-                  if (error.error['cpf'].includes("usuario with this cpf already exists.")) {
-                    message +=('CPF já cadastrado\n');
+                //Unable to log in with provided credentials
+                if (error.error['non_field_errors']) {
+                  if (error.error['non_field_errors'].includes("Unable to log in with provided credentials.")) {
+                    message +=('Usuário ou senha inválido.\n');
                   }
                 } else {
                   console.log(error.error);
