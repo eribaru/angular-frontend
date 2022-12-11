@@ -29,7 +29,7 @@
             </mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline" class="form-field-full">
-            <mat-label>Resposabilidades</mat-label>
+            <mat-label>Responsabilidades</mat-label>
             <input formControlName="resposabilidades"  matInput  type="text"  >
             <mat-error *ngIf="vagaForm.controls['resposabilidades'].errors?.['required'] && vagaForm.controls['resposabilidades'].touched">
               Resposabilidades é <strong>obrigatório</strong>
@@ -107,9 +107,6 @@
         <mat-form-field appearance="outline" class="form-field-full">
           <mat-label>Data fechamento</mat-label>
           <input matInput type="date"  formControlName="data_fechamento">
-          <mat-error  *ngIf="vagaForm.controls['data_fechamento'].errors?.['required'] && vagaForm.controls['data_fechamento'].touched">
-            Data fechamento é  <strong>obrigatória</strong>
-          </mat-error>
         </mat-form-field>
       </form>
 

@@ -69,7 +69,7 @@ export class EmpresaAdicionarComponent implements OnInit {
       cnpj: ['', [Validators.required, Validators.maxLength(16)]],
       nome: [null, Validators.required],
       ramo: [null, Validators.required],
-      sede: [null, Validators.required],
+      sede: [null],
     });
 
   }
@@ -79,9 +79,17 @@ export class EmpresaAdicionarComponent implements OnInit {
   }
 
   salvar(): void {
-    console.log(this.empresaForm.value);
-    this.saveCompanyDataToApi();
-
+    if (this.empresaForm.valid) {
+      this.saveCompanyDataToApi();
+    }else {
+      if (this.empresaForm.invalid) {
+        Object.keys(this.empresaForm.controls).forEach(field => { // {1}
+          const control = this.empresaForm.get(field);            // {2}
+          if (control != null)
+            control.markAsTouched({onlySelf: true});       // {3}
+        });
+      }
+    }
   }
 
   public saveCompanyDataToApi = () => {

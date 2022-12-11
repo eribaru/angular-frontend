@@ -43,9 +43,6 @@
         <mat-form-field appearance="outline" class="form-field-full">
           <mat-label>Complemento</mat-label>
           <input  formControlName="complemento"  matInput  type="text"  >
-          <mat-error *ngIf="enderecoForm.controls['complemento'].errors?.['required'] && enderecoForm.controls['complemento'].touched">
-            Complemento é <strong>obrigatório</strong>
-          </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" class="form-field-full">
           <mat-label>Bairro</mat-label>

@@ -87,9 +87,9 @@ export class VagaAtualizarComponent implements OnInit {
       pcsc: [null, [Validators.required]],
       remoto: [null, Validators.required],
       carga_horaria: [null, Validators.required],
-      local: [null, Validators.required],
+      local: [null],
       data_cadastro: [null, Validators.required],
-      data_fechamento: [null, Validators.required],
+      data_fechamento: [null],
     });
     this.recuperaEmpresa();
     this.vagaForm.controls["cargo"].setValue(this.vaga.cargo);
@@ -115,9 +115,29 @@ export class VagaAtualizarComponent implements OnInit {
   }
 
   salvar(): void {
-    console.log(this.vagaForm.value);
-    this.updateJobDataToApi();
-
+    if (this.vagaForm.valid && this.empresasControl.invalid && this.tipoRegimeControl.invalid && this.tipoContratoControl.invalid) {
+      this.updateJobDataToApi();
+    }else{
+      if(this.vagaForm.invalid){
+        Object.keys(this.vagaForm.controls).forEach(field => { // {1}
+          const control = this.vagaForm.get(field);            // {2}
+          if(control!=null)
+            control.markAsTouched({ onlySelf: true });       // {3}
+        });
+      }
+      if(this.tipoRegimeControl.invalid) {
+        this.tipoRegimeControl.markAsTouched({ onlySelf: true });
+      }
+      if(this.tipoContratoControl.invalid) {
+        this.tipoContratoControl.markAsTouched({ onlySelf: true });
+      }
+      if(this.empresasControl.invalid) {
+        this.empresasControl.markAsTouched({ onlySelf: true });
+      }
+      this.snackBar.open('Erro no prenchimento', 'Prrencha todos os campos.', {
+        duration: 3000,
+      });
+    }
   }
 
   public recuperaEmpresa = () => {
@@ -148,25 +168,4 @@ export class VagaAtualizarComponent implements OnInit {
       },
     });
   };
-/*
-  public loaddAllCidades = () => {
-    this.apiService.getData('cidades?cod_estado=MG&search='+this.cidadesControl.value).subscribe({
-      next: (data) => console.log(data),
-      error: (error) => {
-        console.error('There was an error!', error);
-      },
-    });
-  };*/
-
-  // filter and return the values
-  /*
-  filter(val: string): Observable<ICidade[]> {
-    // call the service which makes the http-request
-    this.apiService.getData('cidades?cod_estado=MG&search='+this.cidadesControl.value)
-     .pipe(
-       map(response => response.filter(option => {
-         return option.name.toLowerCase().indexOf(val.toLowerCase()) === 0
-       }))
-     )
-   }  */
 }

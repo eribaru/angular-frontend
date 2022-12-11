@@ -5,6 +5,7 @@ import { ApiService } from '../../../services/api.service';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {UsuarioService} from "../../../services/usuario.service";
 
 
 @Component({
@@ -38,7 +39,7 @@ export class EnderecoListaComponent implements OnInit {
     this.getAllEndereco();
   }
   public getAllEndereco = () => {
-    this.repoService.getData('enderecos').subscribe((res) => {
+    this.repoService.getData('enderecos?usuario='+UsuarioService.obterIdUsuarioLogado).subscribe((res) => {
       this.dataSource.data = res as IEndereco[];
       this.enderecos   = res as IEndereco[]
     });

@@ -90,7 +90,7 @@ export class VagaAdicionarComponent implements OnInit {
       local: [null, Validators.required],
       carga_horaria: [null, Validators.required],
       data_cadastro: [null, Validators.required],
-      data_fechamento: [null, Validators.required],
+      data_fechamento: [null],
     });
 
   }
@@ -101,34 +101,58 @@ export class VagaAdicionarComponent implements OnInit {
 
   salvar(): void {
     console.log(this.vagaForm.value);
-    this.saveVagaDataToApi();
 
+    if (this.vagaForm.valid && this.empresasControl.valid && this.tipoRegimeControl.invalid && this.tipoContratoControl.valid) {
+      this.saveVagaDataToApi();
+    }else{
+      if(this.vagaForm.invalid){
+        Object.keys(this.vagaForm.controls).forEach(field => { // {1}
+          const control = this.vagaForm.get(field);            // {2}
+          if(control!=null)
+            control.markAsTouched({ onlySelf: true });       // {3}
+        });
+      }
+      if(this.tipoRegimeControl.invalid) {
+        this.tipoRegimeControl.markAsTouched({ onlySelf: true });
+      }
+      if(this.tipoContratoControl.invalid) {
+        this.tipoContratoControl.markAsTouched({ onlySelf: true });
+      }
+      if(this.empresasControl.invalid) {
+        this.empresasControl.markAsTouched({ onlySelf: true });
+      }
+      this.snackBar.open('Erro no prenchimento', 'Prrencha todos os campos.', {
+        duration: 3000,
+      });
+      return;
+    }
   }
 
   public saveVagaDataToApi = () => {
 
     const vaga = this.vagaForm.getRawValue() as IVaga;
-    const empresaSelecionada : IEmpresa = this.empresasControl.value as IEmpresa ;
+    const empresaSelecionada: IEmpresa = this.empresasControl.value as IEmpresa;
     vaga.empresa = empresaSelecionada.id;
     vaga.tipo_contrato = this.tipoContratoControl.value as TipoContratoEnum;
     vaga.contratacao = this.tipoRegimeControl.value as TipoRegimeEnum;
-    this.apiService.postData('vagas', vaga).subscribe({
-      next: () => {
-        this.snackBar.open('Sucesso', 'Vaga foi salva', {
-          duration: 3000,
-        });
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(['vaga-lista']).then().then();
-      },
-      error: (error) => {
-        console.error('There was an error!', error);
+      this.apiService.postData('vagas', vaga).subscribe({
+        next: () => {
+          this.snackBar.open('Sucesso', 'Vaga foi salva', {
+            duration: 3000,
+          });
+          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          this.router.onSameUrlNavigation = 'reload';
+          this.router.navigate(['vaga-lista']).then().then();
+        },
+        error: (error) => {
+          console.error('There was an error!', error);
 
           throw error;
 
-      },
-    });
-  };
+        },
+      });
+
+  }
 
   // filter and return the values
  public getAllEmpresas = () => {

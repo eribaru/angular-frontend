@@ -109,8 +109,7 @@ export class EnderecoAdicionarComponent implements OnInit {
       cep: [null, Validators.required],
       bairro: [null, [Validators.required]],
       principal: [null, [Validators.required]],
-
-      complemento: [null, Validators.required],
+      complemento: [null],
     });
 
   }
@@ -120,8 +119,24 @@ export class EnderecoAdicionarComponent implements OnInit {
   }
 
   salvar(): void {
-    console.log(this.enderecoForm.value);
-    this.saveVagaDataToApi();
+    if (this.enderecoForm.valid && this.estadosControl.valid && this.cidadesControl.valid && this.tipoEnderecoControl.valid) {
+      this.saveVagaDataToApi();
+    } if(this.enderecoForm.invalid){
+      Object.keys(this.enderecoForm.controls).forEach(field => { // {1}
+        const control = this.enderecoForm.get(field);            // {2}
+        if(control!=null)
+          control.markAsTouched({ onlySelf: true });       // {3}
+      });
+    }
+    if(this.estadosControl.invalid) {
+      this.estadosControl.markAsTouched({ onlySelf: true });
+    }
+    if(this.cidadesControl.invalid) {
+      this.cidadesControl.markAsTouched({ onlySelf: true });
+    }
+    if(this.tipoEnderecoControl.invalid) {
+      this.tipoEnderecoControl.markAsTouched({ onlySelf: true });
+    }
 
   }
 

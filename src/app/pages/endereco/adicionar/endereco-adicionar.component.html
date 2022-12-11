@@ -81,6 +81,7 @@
                 {{cidade.nom_cidade}}
               </mat-option>
             </mat-autocomplete>
+            <mat-error *ngIf="cidadesControl.hasError('required')">Cidade é   <strong>obrigatório</strong></mat-error>
           </mat-form-field>
           <mat-checkbox class="example-margin"  formControlName="principal" [(ngModel)]="principal">Principal</mat-checkbox>
           <mat-form-field appearance="fill">
